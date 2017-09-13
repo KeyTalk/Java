@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  activity_rccdfile_email_import.xml
+  ~ Description : Import rccd file from email screen xml file
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10sp"
+    tools:context="com.keytalk.nextgen5.view.activities.RCCDFileEmailImportScreenActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/email_rccd_import_confirm_text"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/email_rccd_open_button"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/open_text"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/email_rccd_cancel_button"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/email_rccd_open_button"
+            android:text="@string/cancel_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

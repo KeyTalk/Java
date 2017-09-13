@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  segmented_button_bar.xml
+  ~ Description : Segmented bar screen
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <RadioButton
+        android:id="@+id/radio_btn_1"
+        style="@style/default_segmented_btn"
+        android:background="@drawable/segmented_button_left"
+        android:gravity="center"
+        android:text="@string/embedded_browser"
+        android:textColor="@color/segmented_txt_color" />
+
+
+    <RadioButton
+        android:id="@+id/radio_btn_3"
+        style="@style/default_segmented_btn"
+        android:background="@drawable/segmented_button_right"
+        android:gravity="center"
+        android:text="@string/native_browser"
+        android:textColor="@color/segmented_txt_color" />
+
+</merge>

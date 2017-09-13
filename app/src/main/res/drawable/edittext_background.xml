@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  edittext_background.xml
+  ~ Description : XML file for define the background color of edit text
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <solid android:color="@color/edittext_background" />
+
+    <corners
+        android:bottomLeftRadius="8dp"
+        android:bottomRightRadius="8dp"
+        android:topLeftRadius="8dp"
+        android:topRightRadius="8dp" />
+
+    <stroke
+        android:width="2dp"
+        android:color="@color/edittext_border" />
+
+</shape>

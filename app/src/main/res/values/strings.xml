@@ -1,0 +1,102 @@
+<!--
+  ~ Class  :  strings.xml
+  ~ Description : XML file for strings which used in app
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<resources>
+    <string name="app_name">KeyTalk5</string>
+    <string name="import_rccd">Import RCCD</string>
+    <string name="rccd_import_url_hint_text">Enter URL of RCCD File</string>
+    <string name="embedded_browser">Embedded</string>
+    <string name="native_browser">Native</string>
+    <string name="reset_text">Reset</string>
+    <string name="reset_all_text">Reset All</string>
+    <string name="reset_session_text">Reset Session</string>
+    <string name="browser_message_text">Please select your browser which will be used for load the page.</string>
+    <string name="browser_message_text_hint">Please select your browser which will be used for load the page. Do you want to continue?</string>
+    <string name="reset_message_text">This removes all previously imported providers,services and related certificates.</string>
+    <string name="reset_session_message_text">This removes all previously imported certificates.</string>
+    <string name="url_message_text">Enter a URL that points to an RCCD file.\n It is also possible to import an RCCD via an e-mail attachment.</string>
+    <string name="email_message_text">It is also possible to import an RCCD via an e-mail attachment.</string>
+    <string name="view_client_identifier_text">View client identifier</string>
+    <string name="null_value">""</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="yes_text">Yes</string>
+    <string name="No_text">No</string>
+    <string name="report_button">Report</string>
+    <string name="OK_text">OK</string>
+    <string name="install_text">Install</string>
+    <string name="services">Services</string>
+    <string name="open_text">Open</string>
+    <string name="loading_text">Loading...</string>
+    <string name="url_error_message">Please enter a valid url.</string>
+    <string name="update_url_message">Do you want to change server url?</string>
+    <string name="same_url_message">Please change your url</string>
+    <string name="retry">Retry</string>
+    <string name="urlscreen_text">Please enter server URL</string>
+    <string name="urlscreen_default_text">Server URL</string>
+    <string name="update_text">Update</string>
+    <string name="app_webview">KeyTalk WebView</string>
+    <string name="group_header">Keytalk_Group_Header</string>
+    <string name="email_rccd_import_confirm_text">Do you want to open this file on KeyTalk?</string>
+    <string name="emailscreen_email_address">androidsupport@keytalk.com</string>
+    <string name="emailscreen_subject">KeyTalk Android client - Error report</string>
+    <string name="emailscreen_message">This is an e-mail to the KeyTalk support desk.\nPlease replace this text with a description of the problem you are experiencing, and what you were doing when the problem occurred.\n\nThe attached log file is required to let us help you as efficient as possible. It does not contain any personal information.</string>
+    <string name="import_rccd_alert_title">Import RCCD</string>
+    <string name="view_client_identifier_message">During a support call,we may ask you to provide this mobile device\'s unique number(for example, to block it in case it gets stolen).Please note down the following number and store it in safe place:\n\n%s</string>
+    <string name="permission_denied_message">You have denied some of the required permissions and application functionality  may not work as expected. Would you like to give the permissions? </string>
+    <string name="phonestat_permission_alert_message">Unable to process your request without permission and application functionality  may not work as expected!</string>
+    <string name="countdown_default_text">9</string>
+    <string name="usernamescreen_header">Username</string>
+    <string name="usernamescreen_text">Enter a username or select one of the presets presented below</string>
+    <string name="usernamescreen_default_text">Username</string>
+    <string name="usernamescreen_hardcoded_user">testuser@keytalk.local</string>
+    <string name="usernamescreen_error_message_header">Error</string>
+    <string name="usernamescreen_error_message">Please enter a valid username.</string>
+    <string name="usernamescreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_header">Password</string>
+    <string name="passwordscreen_text">Please enter a password for the user with username ‘%s’.</string>
+    <string name="passwordscreen_default_text">Password</string>
+    <string name="passwordscreen_header_button">Username</string>
+    <string name="passwordscreen_error_message_header">Error</string>
+    <string name="passwordscreen_error_message">Invalid credentials</string>
+    <string name="password_error_message">Please enter a valid password.</string>
+    <string name="passwordscreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_header">Error</string>
+    <string name="passwordscreen_communication_message">Communication Problem.</string>
+    <string name="passwordscreen_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_button_2">Report</string>
+    <string name="authenticationpin_header">Pin</string>
+    <string name="authenticationpin_text">Please enter a PIN for the user with username ‘%s’</string>
+    <string name="authenticationpin_default_text">123</string>
+    <string name="authenticationpin_header_button">Password</string>
+    <string name="authenticationpin_error_message_header">Error</string>
+    <string name="authenticationpin_error_message">Please enter a valid pin number.</string>
+    <string name="authenticationpin_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_header">Error</string>
+    <string name="authenticationpin_communication_message">Communication Problem.</string>
+    <string name="authenticationpin_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_button_2">Report</string>
+    <string name="responsescreen_header">Challenge/Response</string>
+    <string name="responsescreen_text">Please enter a response for the challenge ‘%s’</string>
+    <string name="new_responsescreen_text">Please enter a response for the challenge</string>
+    <string name="responsescreen_default_text">Response</string>
+    <string name="responsescreen_header_button">Cancel</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="change_button_text">Change</string>
+    <string name="invalid_oldpassword">Please enter valid old password.</string>
+    <string name="invalid_newpassword">Please enter valid new password.</string>
+    <string name="invalid_retypepassword">Please enter valid retype password.</string>
+    <string name="same_old_newpassword">Old password and New password must not be same.</string>
+    <string name="different_new_retypepassword">New and Retype password must be same.</string>
+    <string name="password_updated">Password has been updated and please login with new password.</string>
+    <string name="change_password_message">Please enter new password for the user with username ‘%s’ and click Change.\nPassword must be at least seven Character long with one number and one special symbol.</string>
+    <string name="rccd_import">RCCD Import</string>
+
+</resources>

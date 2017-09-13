@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Class  :  dimens.xml
+  ~ Description : Dimensions XML file
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<resources>
+    <dimen name="size_15dp">15dp</dimen>
+    <dimen name="size_18">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Class  :  activity_rccdimport_screen.xml
+  ~ Description : XML file of import rccd file screen
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keytalk.nextgen5.view.activities.RCCDImportScreenActivity">
+
+    <ProgressBar
+        android:id="@+id/spinner_progressbar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:elevation="7dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/size_15dp">
+
+            <EditText
+                android:id="@+id/rccd_input_edittext"
+                style="@style/screen_edittext"
+                android:hint="@string/rccd_import_url_hint_text"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/rccd_import_ok_button"
+                style="@style/screen_button"
+                android:text="@string/import_rccd" />
+
+            <TextView
+                style="@style/screen_text"
+                android:text="@string/url_message_text" />
+
+            <com.keytalk.nextgen5.view.component.SegmentedControlBar
+                android:id="@+id/browser_type_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/segmented_bar_bg" />
+
+            <TextView
+                android:id="@+id/browser_type_group_text"
+                style="@style/screen_text"
+                android:text="@string/browser_message_text" />
+
+            <Button
+                android:id="@+id/rccd_import_reset_button"
+                style="@style/screen_button"
+                android:text="@string/reset_all_text" />
+
+            <TextView
+                style="@style/screen_text"
+                android:text="@string/reset_message_text" />
+
+            <Button
+                android:id="@+id/rccd_import_reset_session_button"
+                style="@style/screen_button"
+                android:text="@string/reset_session_text" />
+
+            <TextView
+                style="@style/screen_text"
+                android:text="@string/reset_session_message_text" />
+
+            <Button
+                android:id="@+id/rccd_import_client_identifier_button"
+                style="@style/screen_button"
+                android:text="@string/view_client_identifier_text" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

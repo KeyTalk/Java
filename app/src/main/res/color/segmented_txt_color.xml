@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  segmented_txt_color.xml
+  ~ Description : Cxml file for handle the color code of segmented bar in import rccd screen
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true" android:color="@android:color/white"/>
+    <item android:color="@color/dark_gray"/>
+
+</selector>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="rightButtonBackground" format="reference" />
+    <attr name="rightButtonTextColor" format="color" />
+    <attr name="rightButtonTextSize" format="dimension" />
+    <attr name="headerTextSize" format="dimension" />
+    <attr name="rightButtonLabel" format="reference" />
+    <attr name="rightButtonLeftPadding" format="dimension" />
+    <attr name="rightButtonRightPadding" format="dimension" />
+    <attr name="headerTexttoppadding" format="dimension" />
+    <attr name="headerTextbottompadding" format="dimension" />
+    <attr name="leftButtonBackground" format="reference" />
+    <attr name="leftButtonTextColor" format="color" />
+    <attr name="leftButtonTextSize" format="dimension" />
+    <attr name="leftButtonLabel" format="reference" />
+    <attr name="leftButtonLeftPadding" format="dimension" />
+    <attr name="leftButtonRightPadding" format="dimension" />
+    <attr name="rightButtonVisibility">
+        <enum name="visible" value="0" />
+        <enum name="invisible" value="1" />
+        <enum name="gone" value="2" />
+    </attr>
+    <attr name="leftButtonVisibility">
+        <enum name="visible" value="0" />
+        <enum name="invisible" value="1" />
+        <enum name="gone" value="2" />
+    </attr>
+    <attr name="headerTextVisibility">
+        <enum name="visible" value="0" />
+        <enum name="invisible" value="1" />
+        <enum name="gone" value="2" />
+    </attr>
+    <attr name="rightButtonTextStyle">
+        <enum name="normal" value="0" />
+        <enum name="bold" value="1" />
+        <enum name="italic" value="2" />
+    </attr>
+    <attr name="leftButtonTextStyle">
+        <enum name="normal" value="0" />
+        <enum name="bold" value="1" />
+        <enum name="italic" value="2" />
+    </attr>
+
+    <declare-styleable name="custombutton">
+        <attr name="buttontextsize" />
+        <attr name="buttontextcolor" />
+        <attr name="buttonbackground" />
+        <attr name="buttontextstyle" />
+        <attr name="buttontext" />
+        <attr name="buttonpaddingTop" />
+        <attr name="buttonpaddingBottom" />
+        <attr name="buttonpaddingLeft" />
+        <attr name="buttonpaddingRight" />
+        <attr name="buttonfontname" />
+    </declare-styleable>
+
+    <attr name="buttontextcolor" format="color" />
+    <attr name="buttontextsize" format="dimension" />
+    <attr name="buttonbackground" format="reference" />
+    <attr name="buttontext" format="reference" />
+    <attr name="buttonpaddingTop" format="dimension" />
+    <attr name="buttonpaddingBottom" format="dimension" />
+    <attr name="buttonpaddingLeft" format="dimension" />
+    <attr name="buttonpaddingRight" format="dimension" />
+    <attr name="buttonfontname" format="string" />
+    <attr name="buttontextstyle">
+        <enum name="normal" value="0" />
+        <enum name="bold" value="1" />
+        <enum name="italic" value="2" />
+    </attr>
+
+    <declare-styleable name="customtextview">
+        <attr name="textfontname"></attr>
+    </declare-styleable>
+
+    <attr name="textfontname" format="string" />
+
+    <declare-styleable name="pagefooter">
+        <attr name="rightButtonBackground" />
+        <attr name="rightButtonTextColor" />
+        <attr name="rightButtonTextSize" />
+        <attr name="rightButtonLabel" />
+        <attr name="rightButtonLeftPadding" />
+        <attr name="rightButtonRightPadding" />
+        <attr name="rightButtonVisibility" />
+        <attr name="rightButtonTextStyle" />
+        <attr name="centerButtonBackground" />
+        <attr name="centerButtonTextColor" />
+        <attr name="centerButtonTextSize" />
+        <attr name="centerButtonLabel" />
+        <attr name="centerButtonLeftPadding" />
+        <attr name="centerButtonRightPadding" />
+        <attr name="centerButtonVisibility" />
+        <attr name="centerButtonTextStyle" />
+        <attr name="leftButtonBackground" />
+        <attr name="leftButtonTextColor" />
+        <attr name="leftButtonTextSize" />
+        <attr name="leftButtonLabel" />
+        <attr name="leftButtonLeftPadding" />
+        <attr name="leftButtonRightPadding" />
+        <attr name="leftButtonVisibility" />
+        <attr name="leftButtonTextStyle" />
+    </declare-styleable>
+
+
+    <attr name="centerButtonBackground" format="reference" />
+    <attr name="centerButtonTextColor" format="color" />
+    <attr name="centerButtonTextSize" format="dimension" />
+    <attr name="centerButtonLabel" format="reference" />
+    <attr name="centerButtonLeftPadding" format="dimension" />
+    <attr name="centerButtonRightPadding" format="dimension" />
+    <attr name="centerButtonVisibility">
+        <enum name="visible" value="0" />
+        <enum name="invisible" value="1" />
+        <enum name="gone" value="2" />
+    </attr>
+    <attr name="centerButtonTextStyle">
+        <enum name="normal" value="0" />
+        <enum name="bold" value="1" />
+        <enum name="italic" value="2" />
+    </attr>
+
+    <declare-styleable name="SegmentedControlButton">
+        <attr format="color" name="textColorSelected" />
+        <attr format="color" name="textColorUnselected" />
+        <attr format="reference" name="backgroundSelected" />
+    </declare-styleable>
+</resources>

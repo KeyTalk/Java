@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  activity_new_challenge_response_screen.xml
+  ~ Description : XML file for new challenge response screen
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical" >
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top|center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/size_15dp" >
+
+                <TextView
+                    android:id="@+id/challengeCustomText"
+                    style="@style/screen_text"
+                    android:text="@string/new_responsescreen_text" />
+
+                <TextView
+                    android:id="@+id/umtsAutnText"
+                    style="@style/screen_text"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="@string/responsescreen_default_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/umtsAutn_edittext"
+                    style="@style/screen_edittext"
+                    android:hint="@string/responsescreen_default_text"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/umtsRandomText"
+                    style="@style/screen_text"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="@string/responsescreen_default_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/umtsRandom_edittext"
+                    style="@style/screen_edittext"
+                    android:hint="@string/responsescreen_default_text"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/resText"
+                    style="@style/screen_text"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="@string/responsescreen_default_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/res_edittext"
+                    style="@style/screen_edittext"
+                    android:hint="@string/responsescreen_default_text"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/ikText"
+                    style="@style/screen_text"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="@string/responsescreen_default_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ik_edittext"
+                    style="@style/screen_edittext"
+                    android:hint="@string/responsescreen_default_text"
+                    android:inputType="text"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/ckText"
+                    style="@style/screen_text"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="@string/responsescreen_default_text"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ck_edittext"
+                    style="@style/screen_edittext"
+                    android:hint="@string/responsescreen_default_text"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/challengeOKButton"
+                    style="@style/screen_button"
+                    android:text="@string/OK_text" />
+            </LinearLayout>
+        </ScrollView>
+        <include layout="@layout/countdown_widget" />
+
+    </LinearLayout>
+
+</FrameLayout>

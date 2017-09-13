@@ -1,0 +1,19 @@
+<!--
+  ~ Class  :  menu_rccd_import_screen.xml
+  ~ Description : XML file of menu in import rccd screen
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activities.RCCDImportScreenActivity">
+
+    <item
+        android:id="@+id/action_announcement"
+        android:title="@string/services"
+        android:icon="@android:drawable/ic_menu_view"
+        app:showAsAction="always" />
+</menu>

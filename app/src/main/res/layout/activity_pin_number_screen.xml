@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  activity_pin_number_screen.xml
+  ~ Description : XML of pin number screen
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/size_15dp" >
+
+            <TextView
+                android:id="@+id/pinCustomText"
+                style="@style/screen_text"
+                android:text="@string/authenticationpin_text" />
+
+            <EditText
+                android:id="@+id/authenticationpin_edittext"
+                style="@style/screen_edittext"
+                android:hint="@string/authenticationpin_default_text"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/pinOKButton"
+                style="@style/screen_button"
+                android:text="@string/OK_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/countdown_widget" />
+
+</FrameLayout>

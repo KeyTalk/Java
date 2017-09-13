@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  colors.xml
+  ~ Description : XML file for define all color codes used in app
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<resources>
+<!--    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#F19739</color>
+    <color name="colorPrimaryDark">#B96508</color>
+    <color name="colorAccent">#000000</color>
+
+    <color name="edittext_background">#f7f7f7</color>
+    <color name="edittext_border">#ababab</color>
+    <color name="dark_balck">#000000</color>
+    <color name="dark_gray">#FF666666</color>
+    <color name="border_gray">#FFA9A9A9</color>
+    <color name="transparent">#00000000</color>
+    <color name="listitem_background">#f7f7f7</color>
+    <color name="listitem_border">#ababab</color>
+    <color name="listgroup_headercolor">#4c566c</color>
+    <color name="countdownwidget_background">#bb000000</color>
+    <color name="countdownwidget_textcolor">#ffffff</color>
+</resources>

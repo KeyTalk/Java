@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  validation_messages.xml
+  ~ Description : string xml file
+  ~
+  ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+<resources>
+
+    <string name="alert_dialog_title">Alert</string>
+    <string name="no_network_message">You are not connected to the internet. Please check your settings or try again later.</string>
+    <string name="no_values_entered">Please enter a valid URL that you would like to import.</string>
+    <string name="empty_request_response">Sorry, your search found no result.\nPlease try again.</string>
+    <string name="invalid_rccd_download_response">Downloaded RCCD file is invalid. Please check your entered URL correctly.</string>
+    <string name="invalid_rccd_checksum_response">Sorry, downloaded RCCD file do not have valid certificate. Please try again.</string>
+    <string name="invalid_rccd_download_email">Downloaded RCCD file is invalid. Please try again.</string>
+    <string name="sucess_rccd_download" formatted ="false">Provider %s (%s Services) was imported from the RCCD file</string>
+    <string name="rccdscreen_reset_message">This removes all previously imported providers,services and related certificates.</string>
+    <string name="rccdscreen_reset_session_message">This removes all previously imported certificates.</string>
+    <string name="cert_received_dialog_msg_for_below_ics">Received certificate for %s Service and embedded browser will load the server</string>
+    <string name="cert_received_dialog_msg_for_ics">Received certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
+    <string name="cert_installed_dialog_msg">Certificate for %s Service successfully installed in System and you can access the server through embedded or native browser.</string>
+    <string name="cert_not_installed_dialog_msg">Certificate for %s Service installation failed and you can access the server through embedded browser.</string>
+    <string name="password_expire_option_more" formatted ="false">Your password will expire within %s days. Do you want to reset the password</string>
+    <string name="password_expire_option" formatted ="false">Your password will expire with in few hours. Do you want to reset the password</string>
+    <string name="cert_dialog_failed_again_msgs">Certificate for %s Service installation failed and you can not access the server through native browser. Do you want to reinstall the certificate.</string>
+    <string name="reinstall_cert_received_dialog_msg_for_ics">System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
+    <string name="reinstall_cert">Found certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
+    
+</resources>

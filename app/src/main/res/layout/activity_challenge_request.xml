@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  activity_challenge_request.xml
+  ~ Description : XML file of challenge request screen
+  ~
+ ~ Created by : KeyTalk IT Security BV on 2017
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.keytalk.nextgen5.view.activities.ChallengeRequestActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/size_15dp">
+
+            <TextView
+                android:id="@+id/passwordscreen_text"
+                style="@style/screen_text"
+                android:text="@string/passwordscreen_text" />
+
+            <EditText
+                android:id="@+id/passwordscreen_edittext"
+                style="@style/screen_edittext"
+                android:inputType="textPassword"
+                android:hint="@string/passwordscreen_default_text" />
+
+            <Button
+                android:id="@+id/passwordSubmitButton"
+                style="@style/screen_button"
+                android:text="@string/OK_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/countdown_widget" />
+
+</FrameLayout>
