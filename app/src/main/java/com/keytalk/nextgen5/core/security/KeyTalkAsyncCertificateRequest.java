@@ -131,21 +131,21 @@ public class KeyTalkAsyncCertificateRequest {
 				}
             }
             if (result.isDelay()) {
-                RCCDFileUtil.e("KeyTalk","Phase2 sucessfully completed but user action got delayed");
+                RCCDFileUtil.e("KeyTalk","Phase2 successfully completed but user action got delayed");
                 client.invalidCredentialsDelay(result.getSeconds(), this);
             }
 
             if (result.isLocked()) {
-                RCCDFileUtil.e("KeyTalk","Authentication sucessfully completed but user got locked");
+                RCCDFileUtil.e("KeyTalk","Authentication successfully completed but user got locked");
                 throw new KeyTalkUserLockedOutException("User locked out of system");
             }
             if(result.isExpired()) {
-                RCCDFileUtil.e("KeyTalk","Authentication sucessfully completed but user password got expired");
+                RCCDFileUtil.e("KeyTalk","Authentication successfully completed but user password got expired");
                 suppliedCreds.setNewPasswordRequested(true);
                 client.requestResetCredentials(suppliedCreds, this);
             }
             if(result.isChallenge()) {
-                RCCDFileUtil.e("KeyTalk","Phase3 sucessfully completed but server sending challenge");
+                RCCDFileUtil.e("KeyTalk","Phase3 successfully completed but server sending challenge");
                 suppliedCreds.setChallengeRequested(true);
                 suppliedCreds.setChallengeData(result.getChallengeData());
                 client.requestChallengeCredentials(suppliedCreds, this);
@@ -320,7 +320,7 @@ public class KeyTalkAsyncCertificateRequest {
 
         @Override
         protected void onError(Throwable t) {
-            RCCDFileUtil.e("KeyTalk","Phase4 GetMessages Error :"+t.getMessage());
+            RCCDFileUtil.e("KeyTalk","Phase3 GetMessages Error :"+t.getMessage());
             client.errorOccurred(t);
         }
     }
@@ -335,7 +335,7 @@ public class KeyTalkAsyncCertificateRequest {
         protected CertificateInfo realDoInBackground(Void... params)
                 throws Exception {
             // FIXME: Implement phase 4
-            RCCDFileUtil.e("KeyTalk","Phase5 certificate request starting here");
+            RCCDFileUtil.e("KeyTalk","Phase3 certificate request starting here");
             return protocol.getCertificate();
         }
 

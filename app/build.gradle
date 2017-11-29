@@ -14,7 +14,7 @@ android {
         applicationId "com.keytalk.nextgen5"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 10001
+        versionCode 10002
         versionName "5.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // Enabling multidex support.

@@ -38,6 +38,8 @@ public class KeyTalkCore {
 
     protected void startURLAuthentication(final KeyTalkUiCallback keyTalkUiCallback) {
         try {
+            RCCDFileUtil.e("KeyTalk","Valid certificate Checks  "+selectedRCCDFileRequestData.getServicesUri().trim());
+
             if (mSettings.validCertAvailable(selectedRCCDFileRequestData.getServicesUri().trim(), selectedRCCDFileRequestData.getServicesName().trim())) {
                 try {
                     RCCDFileUtil.e("KeyTalk","Valid certificate available for "+selectedRCCDFileRequestData.getServicesUri().trim());
@@ -46,10 +48,9 @@ public class KeyTalkCore {
                     if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                         boolean isAddedToNativeKeyStore = KeyTalkCommunicationManager.getNativeKeyStoreInstallationStatus(mContext, selectedRCCDFileRequestData.getServicesUri().trim());
                         if(!isAddedToNativeKeyStore) {
-                            mSettings.createPFXFile(cert);
+                            mSettings.createPFXFile(cert, selectedRCCDFileRequestData.getServicesName().trim());
                         }
                     }
-
                     keyTalkUiCallback.reloadPage(selectedRCCDFileRequestData.getServicesUri().trim(), cert.createSSLContext(),cert.getPrivateKey(), cert.getCertificateChain(),selectedRCCDFileRequestData.getServicesName().trim(), null);
                 } catch (Exception e) {
                     RCCDFileUtil.e("KeyTalk","Valid certificate available, but exception "+e);
@@ -157,10 +158,9 @@ public class KeyTalkCore {
                         new RCCDFileUtil().addUserNameToIniFile(mContext , selectedRCCDFileRequestData.getRccdFolderPath(),
                                 selectedRCCDFileRequestData.getChildPosition(), selectedUserName.trim());
                     }
-
-                    mSettings.writeKeyStore(cert,serverURL);
+                    mSettings.writeKeyStore(cert,serverURL, selectedRCCDFileRequestData.getServicesName().trim());
                     if(android.os.Build.VERSION.SDK_INT >= 14) {
-                        mSettings.createPFXFile(cert);
+                        mSettings.createPFXFile(cert, selectedRCCDFileRequestData.getServicesName().trim());
                     }
                     if(serverMsg != null && serverMsg.length > 0 ) {
                         //New Code
@@ -229,9 +229,7 @@ public class KeyTalkCore {
                                                     KeyTalkExpiredCredentialConsumer expiredConsumer) {
                 // TODO Auto-generated method stub
                 keyTalkUiCallback.requestChallengeCredentials(creds, expiredConsumer);
-
             }
-
         });
         request.start();
     }

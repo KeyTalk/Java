@@ -50,11 +50,8 @@ public class KeyTalkSettings {
         boolean result = false;
         try {
             KeyStore ks = readKeyStore(url,serviceName).getKeyStore();
-			/*X509Certificate cert = getCertificateForServiceName(ks,
-					getServiceNameFromUrl(url));*/
             X509Certificate cert = getCertificateForServiceName(ks,serviceName);
-            Date practicalEndTime = calcPracticalEndTime(cert.getNotBefore(),
-                    cert.getNotAfter(), getPracticalEndTimePercentage());
+            Date practicalEndTime = calcPracticalEndTime(cert.getNotBefore(),cert.getNotAfter(), getPracticalEndTimePercentage());
             Date currentTime = new Date();
             result = currentTime.before(practicalEndTime);
         } catch (FileNotFoundException e) {
@@ -63,6 +60,26 @@ public class KeyTalkSettings {
             // do nothing, result is already false
         }
         return result;
+    }
+
+    private X509Certificate getCertificateForServiceName(KeyStore ks, String serviceName) throws KeyTalkNoCertificateException {
+        try {
+            Enumeration<String> aliases = ks.aliases();
+            while (aliases.hasMoreElements()) {
+                String alias = aliases.nextElement();
+                //RCCDFileUtil.e("KeyTalkSettings","alias  :  "+alias);
+                X509Certificate cert = (X509Certificate) ks.getCertificate(alias);
+               /* String baseServiceName = getNsBaseServiceName(cert);
+                if (baseServiceName.equals(serviceName)) {
+                    return cert;
+                }*/
+               if(cert != null)
+                   return cert;
+            }
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        }
+        throw new KeyTalkNoCertificateException("No certificate found for service: "  + serviceName);
     }
 
     /**
@@ -79,8 +96,7 @@ public class KeyTalkSettings {
      *
      * @see KeyStore
      */
-    protected CertificateInfo readKeyStore(String url, String serviceName)
-            throws FileNotFoundException {
+    protected CertificateInfo readKeyStore(String url, String serviceName) throws FileNotFoundException {
         //String filename = getServiceNameFromUrl(url);
         String filename = serviceName;
         if (filename == null) {
@@ -126,10 +142,10 @@ public class KeyTalkSettings {
      * @see KeyStore
      */
 
-    protected void writeKeyStore(CertificateInfo cert, String passwordURL) {
+    protected void writeKeyStore(CertificateInfo cert, String passwordURL, String serviceName) {
         try {
-            String filename = getNsBaseServiceName(cert.getCertificateChain()[0]);
-            //New Code
+            //String filename = getNsBaseServiceName(cert.getCertificateChain()[0]);
+            String filename = serviceName;
             String certCommonPath = mContext.getFilesDir() + ProtocolConstants.RCCD_FOLDER_SEPERATOR+ ProtocolConstants.RCCD_FILE_INTERNAL_CERT_STORAGE_FOLDER;
             File certCommonFile = new File(certCommonPath);
             if (!certCommonFile.isDirectory()) {
@@ -140,14 +156,10 @@ public class KeyTalkSettings {
                 certCommonFile.delete();
             }
             FileOutputStream fout =  new FileOutputStream(certCommonPath + ProtocolConstants.RCCD_FOLDER_SEPERATOR + filename);
-            //New Code end
-
-            //FileOutputStream fout = mContext.openFileOutput(filename,Context.MODE_PRIVATE);
             try {
                 KeyStore ks = cert.getKeyStore();
                 ks.store(fout, cert.getCertPassword().toCharArray());
                 SharedPreferences.Editor editor = mSettings.edit();
-                //editor.putString(KMSettingsTagPassword, cert.getCertPassword());
                 editor.putString(passwordURL, cert.getCertPassword());
                 editor.commit();
                 RCCDFileUtil.e("KeyTalk","certificate added to system");
@@ -160,12 +172,10 @@ public class KeyTalkSettings {
         }
     }
 
-    protected void createPFXFile(CertificateInfo cert) {
+    protected void createPFXFile(CertificateInfo cert, String serviceName) {
         try {
-            String filename = getNsBaseServiceName(cert.getCertificateChain()[0]);
-            //FileOutputStream fout = mContext.openFileOutput(filename,Context.MODE_PRIVATE);
-            //FileOutputStream fout = new FileOutputStream(new File(Environment.getExternalStorageDirectory(), "KT_AD.pfx"));
-            //File pfxFile = new File(mContext.getFilesDir() + "/KeyTalkPFX/KT_AD.pfx");
+            //String filename = getNsBaseServiceName(cert.getCertificateChain()[0]);
+            String filename = serviceName;
             String rccdCommonPath = mContext.getFilesDir() +ProtocolConstants.PFX_PATH;
             File rccdCommonFile = new File(rccdCommonPath);
             if (!rccdCommonFile.isDirectory()) {
@@ -176,15 +186,12 @@ public class KeyTalkSettings {
             if(rccdCommonFile.exists()) {
                 rccdCommonFile.delete();
             }
-
             FileOutputStream fout = new FileOutputStream(rccdCommonFile);
             try {
                 KeyStore ks = cert.getKeyStore();
                 //	ks.store(fout, "12345".toCharArray());
                 ks.store(fout, userDefinedKeyStorePassword.toCharArray());
-
                 RCCDFileUtil.e("KeyTalk","Added certificate to native keytstore ");
-
             } finally {
                 fout.close();
             }
@@ -198,8 +205,6 @@ public class KeyTalkSettings {
         String filename = serviceName;
         //New Code
         File f = new File(mContext.getFilesDir() + ProtocolConstants.RCCD_FOLDER_SEPERATOR + ProtocolConstants.RCCD_FILE_INTERNAL_CERT_STORAGE_FOLDER + ProtocolConstants.RCCD_FOLDER_SEPERATOR + filename);
-        //New code end
-        //File f = mContext.getFileStreamPath(filename);
         if (f.exists()) {
             Boolean success = f.delete();
             Log.v(ProtocolConstants.TAG, "delete file succeeded: " + success.toString());
@@ -236,25 +241,6 @@ public class KeyTalkSettings {
                 + (validityWindow * percentage / 100));
     }
 
-    private X509Certificate getCertificateForServiceName(KeyStore ks,
-                                                         String serviceName) throws KeyTalkNoCertificateException {
-        try {
-            Enumeration<String> aliases = ks.aliases();
-            while (aliases.hasMoreElements()) {
-                String alias = aliases.nextElement();
-                X509Certificate cert = (X509Certificate) ks
-                        .getCertificate(alias);
-                String baseServiceName = getNsBaseServiceName(cert);
-                if (baseServiceName.equals(serviceName)) {
-                    return cert;
-                }
-            }
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        }
-        throw new KeyTalkNoCertificateException("No certificate found for service: "
-                + serviceName);
-    }
 
 /*	private String getServiceNameFromUrl(String url) {
 		String serviceName = null;
@@ -265,11 +251,11 @@ public class KeyTalkSettings {
 		return serviceName;
 	}*/
 
+/*
     private String getNsBaseServiceName(X509Certificate cert) {
         String nsBaseUrlOID = "2.16.840.1.113730.1.2";
         byte[] value = cert.getExtensionValue(nsBaseUrlOID);
         assert(value != null);
-
         ByteArrayInputStream inStream = new ByteArrayInputStream(value);
         ASN1InputStream asnInputStream = new ASN1InputStream(inStream);
         DERObject derObject;
@@ -290,6 +276,7 @@ public class KeyTalkSettings {
             throw new RuntimeException(e);
         }
     }
+*/
 
     private String getKeyStorePassword(String passwordURL) {
         return mSettings.getString(passwordURL, "");

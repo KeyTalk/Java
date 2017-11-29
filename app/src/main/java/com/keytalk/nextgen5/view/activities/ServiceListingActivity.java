@@ -598,19 +598,16 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                 //showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                 try {
                     final String serviceMessages[] = KeyTalkCommunicationManager.getServerMessage();
-                    Log.e("KeyTalkCore","Server Message >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>:"+serviceMessages.length+","+serviceMessages[0]);
                     if (serviceMessages != null && serviceMessages.length > 0) {
                         boolean isMsg = false;
                         for (int i = 0; i < serviceMessages.length; i++) {
                             if (i + 1 < serviceMessages.length) {
-                                Log.e("KeyTalkCore","Server Message11111111111>>>>>>>>>>>>>>>>>>:"+isMsg);
                                 if (serviceMessages[i].trim() != null && !serviceMessages[i].trim().equals("") && !serviceMessages[i].trim().isEmpty() && serviceMessages[i + 1].trim() != null && !serviceMessages[i + 1].trim().equals(null) && !serviceMessages[i + 1].trim().equals("") && !serviceMessages[i + 1].trim().isEmpty()) {
                                     isMsg = true;
                                     break;
                                 }
                             }
                         }
-                        Log.e("KeyTalkCore","Server Message >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>:"+isMsg);
                         if (isMsg) {
                             showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED_MSG);
                         } else {
