@@ -84,6 +84,7 @@ public final class AppConstants {
     public static final int DIALOG_CHANGE_BROWSER_CONFIRM_MSG = 5028;
     public static final int DIALOG_REINSTALL_CERTIFICATE = 5029;
     public static final int DIALOG_PERMISSION_DENIED_MSG = 5030;
+    public static final int DIALOG_EMPTY_TARGET_URL = 5031;
     public static final int REQUEST_CODE_CERT_REQUEST_CREDENTIAL_ACTIVITY = 10010;
     public static final int REQUEST_CODE_CERT_INSTALL_ACTIVITY = 10011;
     public static final int REQUEST_CODE_RESET_PWD_ACTIVITY = 10012;

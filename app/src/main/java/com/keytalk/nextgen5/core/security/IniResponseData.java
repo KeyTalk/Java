@@ -52,7 +52,14 @@ public class IniResponseData
      * @return String
      */
     private Object get(String key) {
-        return ini.get(key);
+
+        try {
+            return ini.get(key);
+        } catch(Exception e) {
+            return null;
+        }
+
+
     }
 
     /***
@@ -62,7 +69,11 @@ public class IniResponseData
      * @return String
      */
     public String getStringValue(String key) {
-        return get(key).toString();
+        try {
+            return get(key).toString();
+        } catch(Exception e) {
+            return null;
+        }
     }
 
     /***

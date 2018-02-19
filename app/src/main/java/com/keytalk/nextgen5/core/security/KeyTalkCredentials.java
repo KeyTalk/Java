@@ -120,7 +120,7 @@ public class KeyTalkCredentials implements Serializable {
     }
 
     protected KeyTalkCredentials(String requestedCredentials) {
-        Log.e("KMCredentials", "Constructor ");
+        Log.e("KMCredentials", "Constructor  : "+requestedCredentials);
         try {
             JSONObject serverMessageJSONObject = new JSONObject(requestedCredentials);
             if(serverMessageJSONObject.has("credential-types")) {
@@ -165,11 +165,13 @@ public class KeyTalkCredentials implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.e("KMCredentials", "Val "+usernameRequested+","+passwordRequested+","+pinRequested+","+responseRequested+","+hardwareFormulaRequested+","+passwordText+","+resolveServieURISRequested+","+calcServieURIDigestSRequested);
+        Log.e("KMCredentials", "Val : "+usernameRequested+","+passwordRequested+","+pinRequested+","+responseRequested+","+hardwareFormulaRequested+","+passwordText+","+resolveServieURISRequested+","+calcServieURIDigestSRequested);
         Log.e("KMCredentials", "hardwareFormula "+hardwareFormula);
-        for(int i=0; i<serviceURIArray.length; i++) {
+       /* for(int i=0; i<serviceURIArray.length; i++) {
             Log.e("KMCredentials", "uri "+serviceURIArray[i]);
-        }
+        }*/
+
+        Log.e("KMCredentials", "Finished ");
 
     }
 

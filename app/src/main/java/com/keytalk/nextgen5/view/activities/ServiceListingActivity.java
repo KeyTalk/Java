@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -517,6 +518,32 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                 }).create();
                 activityAlertDialog.setCanceledOnTouchOutside(false);
                 return activityAlertDialog;
+
+            case AppConstants.DIALOG_EMPTY_TARGET_URL:
+                dialogIcon.setImageResource(R.drawable.icon_info_transparent);
+                dialogTxtMessage.setText(getResources().getString(
+                        R.string.no_valid_url));
+                dialogTxtMessage.setTextSize(18);
+                activityAlertDialog = new AlertDialog.Builder(this)
+                        .setView(dialogView)
+                        .setIcon(0)
+                        .setPositiveButton(R.string.OK_text,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int whichButton) {
+                                        dissmissAlert(dialog, id);
+                                    }
+                                })
+                        .setNegativeButton(R.string.report_button,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int whichButton) {
+                                        dissmissAlert(dialog, id);
+                                        reportWithEmail();
+                                    }
+                                }).create();
+                activityAlertDialog.setCanceledOnTouchOutside(false);
+                return activityAlertDialog;
         }
         return super.onCreateDialog(id);
     }
@@ -778,11 +805,17 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             if(isNative) {
                 boolean isAddedToNativeKeyStore = KeyTalkCommunicationManager.getNativeKeyStoreInstallationStatus(ServiceListingActivity.this, KeyTalkCommunicationManager.getUrl());
                 if(isAddedToNativeKeyStore) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse( KeyTalkCommunicationManager.getUrl()));
-                    startActivity(browserIntent);
+                    String targetURL = KeyTalkCommunicationManager.getUrl();
+                    if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                        showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                    } else {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse( KeyTalkCommunicationManager.getUrl()));
+                        startActivity(browserIntent);
+                    }
                 } else {
                     showDialog(AppConstants.DIALOG_REINSTALL_CERTIFICATE);
                 }
+
 
             } else {
 
@@ -795,14 +828,17 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         } else {
             boolean isAddedToNativeKeyStore = KeyTalkCommunicationManager.getNativeKeyStoreInstallationStatus(ServiceListingActivity.this, KeyTalkCommunicationManager.getUrl());
             if(isAddedToNativeKeyStore) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse( KeyTalkCommunicationManager.getUrl()));
-                startActivity(browserIntent);
+                String targetURL = KeyTalkCommunicationManager.getUrl();
+                if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                    showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                } else {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(KeyTalkCommunicationManager.getUrl()));
+                    startActivity(browserIntent);
+                }
             } else {
                 showDialog(AppConstants.DIALOG_REINSTALL_CERTIFICATE);
             }
         }
-
-
     }
 
     public void reportWithEmail() {
