@@ -329,16 +329,18 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                     public void onClick(DialogInterface dialog,
                                                         int whichButton) {
                                         dissmissAlert(dialog, id);
-
                                         boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
                                         if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                                             showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                                         } else {
-
-                                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                                            startActivity(intent);
-                                            ServiceListingActivity.this.finish();
-
+                                            String targetURL = KeyTalkCommunicationManager.getUrl();
+                                            if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                                showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                            } else {
+                                                Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                                startActivity(intent);
+                                                ServiceListingActivity.this.finish();
+                                            }
                                         }
                                     }
                                 }).create();
@@ -372,24 +374,26 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                         boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
                                         if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                                             //install on the native kit
-                                            System.out.println("Native keystore start here...");
-
                                             boolean isSucess = KeyTalkCommunicationManager.installCertificateonNativeKeyChain(ServiceListingActivity.this, AppConstants.REQUEST_CODE_CERT_INSTALL_ACTIVITY);
-                                            System.out.println("Native keystore start here... response : "+isSucess);
                                             if(!isSucess) {
-
+                                                String targetURL = KeyTalkCommunicationManager.getUrl();
+                                                if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                                    showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                                } else {
+                                                    Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                                    startActivity(intent);
+                                                    ServiceListingActivity.this.finish();
+                                                }
+                                            }
+                                        } else {
+                                            String targetURL = KeyTalkCommunicationManager.getUrl();
+                                            if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                                showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                            } else {
                                                 Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
                                                 startActivity(intent);
                                                 ServiceListingActivity.this.finish();
-
                                             }
-
-                                        } else {
-
-                                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                                            startActivity(intent);
-                                            ServiceListingActivity.this.finish();
-
                                         }
                                     }
                                 }).create();
@@ -412,20 +416,26 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                         boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
                                         if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                                             //install on the native kit
-                                            System.out.println("DIALOG_REINSTALL_CERTIFICATE...");
-
                                             boolean isSucess = KeyTalkCommunicationManager.installCertificateonNativeKeyChain(ServiceListingActivity.this, AppConstants.REQUEST_CODE_CERT_INSTALL_ACTIVITY);
-                                            System.out.println("DIALOG_REINSTALL_CERTIFICATE start here... response : "+isSucess);
                                             if(!isSucess) {
+                                                String targetURL = KeyTalkCommunicationManager.getUrl();
+                                                if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                                    showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                                } else {
+                                                    Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                                    startActivity(intent);
+                                                    ServiceListingActivity.this.finish();
+                                                }
+                                            }
+                                        } else {
+                                            String targetURL = KeyTalkCommunicationManager.getUrl();
+                                            if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                                showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                            } else {
                                                 Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
                                                 startActivity(intent);
                                                 ServiceListingActivity.this.finish();
                                             }
-                                        } else {
-                                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                                            startActivity(intent);
-                                            ServiceListingActivity.this.finish();
-
                                         }
                                     }
                                 }).create();
@@ -474,9 +484,14 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                     public void onClick(DialogInterface dialog,
                                                         int whichButton) {
                                         dissmissAlert(dialog, id);
-                                        Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                                        startActivity(intent);
-                                        ServiceListingActivity.this.finish();
+                                        String targetURL = KeyTalkCommunicationManager.getUrl();
+                                        if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                            showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                        } else {
+                                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                            startActivity(intent);
+                                            ServiceListingActivity.this.finish();
+                                        }
                                     }
                                 }).create();
                 activityAlertDialog.setCanceledOnTouchOutside(false);
@@ -643,11 +658,14 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                             if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                                 showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                             } else {
-
-                                Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                                startActivity(intent);
-                                ServiceListingActivity.this.finish();
-
+                                String targetURL = KeyTalkCommunicationManager.getUrl();
+                                if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                    showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                                } else {
+                                    Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                    startActivity(intent);
+                                    ServiceListingActivity.this.finish();
+                                }
                             }
                         }
                     } else {
@@ -656,24 +674,30 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                         if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
                             showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                         } else {
-
-                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                            startActivity(intent);
-                            ServiceListingActivity.this.finish();
-
+                            String targetURL = KeyTalkCommunicationManager.getUrl();
+                            if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                                showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                            } else {
+                                Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                                startActivity(intent);
+                                ServiceListingActivity.this.finish();
+                            }
                         }
                     }
                 } catch (Exception e) {
                     //showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                     boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
                     if(android.os.Build.VERSION.SDK_INT >= 14 && isNative) {
-                        showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
+                         showDialog(AppConstants.DIALOG_CERT_SUCESSFULLY_RECEIVED);
                     } else {
-
-                        Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                        startActivity(intent);
-                        ServiceListingActivity.this.finish();
-
+                        String targetURL = KeyTalkCommunicationManager.getUrl();
+                        if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                            showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                        } else {
+                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                            startActivity(intent);
+                            ServiceListingActivity.this.finish();
+                        }
                     }
                 }
             } else if(data != null && data.hasExtra(AppConstants.IS_CERT_REQUEST_DELAY_CREDENTIALS)) {
@@ -723,20 +747,33 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                     KeyTalkCommunicationManager.updateNativeKeyStoreInstallationStatus(ServiceListingActivity.this, KeyTalkCommunicationManager.getUrl(),true);
                     boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
                     if(isNative) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse( KeyTalkCommunicationManager.getUrl()));
-                        startActivity(browserIntent);
+                        String targetURL = KeyTalkCommunicationManager.getUrl();
+                        if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                            showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                        } else {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(KeyTalkCommunicationManager.getUrl()));
+                            startActivity(browserIntent);
+                        }
                     } else {
-
-                        Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                        startActivity(intent);
-                        ServiceListingActivity.this.finish();
+                        String targetURL = KeyTalkCommunicationManager.getUrl();
+                        if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                            showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                        } else {
+                            Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                            startActivity(intent);
+                            ServiceListingActivity.this.finish();
+                        }
 
                     }
                 } catch(Exception e) {
-
-                    Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
-                    startActivity(intent);
-                    ServiceListingActivity.this.finish();
+                    String targetURL = KeyTalkCommunicationManager.getUrl();
+                    if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                        showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                    } else {
+                        Intent intent = new Intent(ServiceListingActivity.this, WebViewActivity.class);
+                        startActivity(intent);
+                        ServiceListingActivity.this.finish();
+                    }
 
                 }
                 //showDialog(AppConstants.DIALOG_CERT_INSTALLATION_SUCESS);
@@ -795,11 +832,14 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         // TODO Auto-generated method stub
         dismissDialog();
         if(android.os.Build.VERSION.SDK_INT < 14) {
-
-            Intent intent = new Intent(this, WebViewActivity.class);
-            startActivity(intent);
-            ServiceListingActivity.this.finish();
-
+            String targetURL = KeyTalkCommunicationManager.getUrl();
+            if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+            } else {
+                Intent intent = new Intent(this, WebViewActivity.class);
+                startActivity(intent);
+                ServiceListingActivity.this.finish();
+            }
         } else if(android.os.Build.VERSION.SDK_INT >= 14 && android.os.Build.VERSION.SDK_INT <= 18) {
             boolean isNative = PreferenceManager.getBoolean(ServiceListingActivity.this, Keys.PreferenceKeys.DEVICE_TYPE);
             if(isNative) {
@@ -815,16 +855,16 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                 } else {
                     showDialog(AppConstants.DIALOG_REINSTALL_CERTIFICATE);
                 }
-
-
             } else {
-
-                Intent intent = new Intent(this, WebViewActivity.class);
-                startActivity(intent);
-                ServiceListingActivity.this.finish();
-
+                String targetURL = KeyTalkCommunicationManager.getUrl();
+                if(targetURL == null || targetURL.isEmpty() || TextUtils.isEmpty(targetURL)) {
+                    showDialog(AppConstants.DIALOG_EMPTY_TARGET_URL);
+                } else {
+                    Intent intent = new Intent(this, WebViewActivity.class);
+                    startActivity(intent);
+                    ServiceListingActivity.this.finish();
+                }
             }
-
         } else {
             boolean isAddedToNativeKeyStore = KeyTalkCommunicationManager.getNativeKeyStoreInstallationStatus(ServiceListingActivity.this, KeyTalkCommunicationManager.getUrl());
             if(isAddedToNativeKeyStore) {
@@ -927,8 +967,6 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             // Google Play services is not available.
             onProviderInstallerNotAvailable();
         }
-
-
     }
 }
 

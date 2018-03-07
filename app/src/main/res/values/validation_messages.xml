@@ -27,5 +27,5 @@
     <string name="cert_dialog_failed_again_msgs">Certificate for %s Service installation failed and you can not access the server through native browser. Do you want to reinstall the certificate.</string>
     <string name="reinstall_cert_received_dialog_msg_for_ics">System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
     <string name="reinstall_cert">Found certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
-    <string name="no_valid_url">Unable to find a target url which certificate support. Please contact your administrator. </string>
+    <string name="no_valid_url">Valid certificate available, but missed target url which certificate support. Please contact your administrator for target URL. </string>
 </resources>
