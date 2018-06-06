@@ -122,16 +122,16 @@ public class KeyTalkAsyncCertificateRequest {
         protected void onSuccess(AuthResult result) throws Exception {
             if (result.isOK()) {
 				if(result.getExpirySeconds() >= 0 && result.getExpirySeconds() < 7 ) {
-					RCCDFileUtil.e("KeyTalk","Phase2 sucessfully completed but user can reset password "+result.getExpirySeconds());
+					RCCDFileUtil.e("KeyTalkAysncCertificate","SupplyCredentials sucessfully completed but user can reset password "+result.getExpirySeconds());
 					suppliedCreds.setExpiryDate(result.getExpirySeconds());
 					client.resetCredentialOption(suppliedCreds, this);
 				} else {
-					RCCDFileUtil.e("KeyTalk","Phase2 sucessfully completed "+result.getExpirySeconds());
+					RCCDFileUtil.e("KeyTalk","SupplyCredentials sucessfully completed "+result.getExpirySeconds());
 					new GetMessages().execute();
 				}
             }
             if (result.isDelay()) {
-                RCCDFileUtil.e("KeyTalk","Phase2 successfully completed but user action got delayed");
+                RCCDFileUtil.e("KeyTalk","Supy credentials completed, but send wrong credentials ");
                 client.invalidCredentialsDelay(result.getSeconds(), this);
             }
 

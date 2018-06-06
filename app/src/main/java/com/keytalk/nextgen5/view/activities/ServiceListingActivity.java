@@ -228,6 +228,8 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
 
     @Override
     public Dialog onCreateDialog(final int id) {
+        KeyTalkCommunicationManager.addToLogFile("ServiceListingActivity","onCreateDialog id: "+id);
+
         layoutInflater = LayoutInflater.from(this);
         dialogView = layoutInflater.inflate(R.layout.custom_dialog, null);
         dialogIcon = (ImageView) dialogView.findViewById(R.id.dialog_image);
@@ -559,6 +561,31 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                                 }).create();
                 activityAlertDialog.setCanceledOnTouchOutside(false);
                 return activityAlertDialog;
+
+            case AppConstants.DIALOG_REPORT_TO_ADMIN:
+                dialogIcon.setImageResource(R.drawable.icon_info_transparent);
+                dialogTxtMessage.setText(getResources().getString( R.string.report_to_admin));
+                dialogTxtMessage.setTextSize(18);
+                activityAlertDialog = new AlertDialog.Builder(this)
+                        .setView(dialogView)
+                        .setIcon(0)
+                        .setPositiveButton(R.string.cancel_text,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int whichButton) {
+                                        dissmissAlert(dialog, id);
+                                    }
+                                })
+                        .setNegativeButton(R.string.report_button,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int whichButton) {
+                                        dissmissAlert(dialog, id);
+                                        reportWithEmail();
+                                    }
+                                }).create();
+                activityAlertDialog.setCanceledOnTouchOutside(false);
+                return activityAlertDialog;
         }
         return super.onCreateDialog(id);
     }
@@ -630,7 +657,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        KeyTalkCommunicationManager.addToLogFile("ServiceListingActivity","onActivityResult requestCode : "+requestCode);
+        KeyTalkCommunicationManager.addToLogFile("ServiceListingActivity","onActivityResult requestCode and resultcode: "+requestCode+","+resultCode);
         if (requestCode == AppConstants.REQUEST_CODE_CERT_REQUEST_CREDENTIAL_ACTIVITY && resultCode == RESULT_OK) {
             if(data != null && data.hasExtra(AppConstants.IS_CERT_REQUEST_ERROR) && data.hasExtra(AppConstants.CERT_REQUEST_ERROR_MSG)) {
                 this.errorMessage = data.getStringExtra(AppConstants.CERT_REQUEST_ERROR_MSG);
@@ -888,6 +915,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         email.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.emailscreen_subject));
         email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message));
         email.setType("message/rfc822");
+        KeyTalkCommunicationManager.addToLogFile("ServiceList", "Log file available? : "+isSucess);
         if(isSucess) {
             Uri uri = KeyTalkCommunicationManager.getLogDetailsAsUri(this);
             email.putExtra(Intent.EXTRA_STREAM,uri);
@@ -914,7 +942,12 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             startActivity(intent);
             finish();
             return true;
+        } else if (id == R.id.action_report) {
+            showDialog(AppConstants.DIALOG_REPORT_TO_ADMIN);
+            return true;
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 

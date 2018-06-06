@@ -52,12 +52,14 @@ public class PayloadBuilder {
     protected String getPhase2SupplyAuthenticationPayload(KeyTalkCredentials creds, String serviceName) throws Exception {
         String requstURL = SLASH + ProtocolConstants.authentication + ProtocolConstants.service + serviceName +
                 ProtocolConstants.caller_hwdescription + URLEncoder.encode(ProtocolConstants.platform_name, "UTF-8");
+        Log.e("TAG", "requstURL : requstURL1 :" + requstURL);
         if (creds.isUsernameRequested())
-            requstURL = requstURL + ProtocolConstants.userid + URLEncoder.encode(creds.getUsername(), "UTF-8");//creds.getUsername();
+            requstURL = requstURL + ProtocolConstants.userid + /*URLEncoder.encode(*/creds.getUsername()/*, "UTF-8")*/;//creds.getUsername();
+
         if (creds.isHardwareSignatureRequested())
             requstURL = requstURL + ProtocolConstants.hardware + URLEncoder.encode(creds.getHardwareSignature(), "UTF-8");
         if (creds.isPasswordRequested())
-            requstURL = requstURL + ProtocolConstants.passwords + URLEncoder.encode(creds.getPassword(), "UTF-8");//creds.getPassword();
+            requstURL = requstURL + ProtocolConstants.passwords + /*URLEncoder.encode(*/creds.getPassword()/*, "UTF-8")*/;//creds.getPassword();
         if (creds.isPinRequested())
             requstURL = requstURL + ProtocolConstants.pins + URLEncoder.encode(creds.getPin(), "UTF-8");//creds.getPin();
 

@@ -28,4 +28,5 @@
     <string name="reinstall_cert_received_dialog_msg_for_ics">System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
     <string name="reinstall_cert">Found certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
     <string name="no_valid_url">Valid certificate available, but missed target url which certificate support. Please contact your administrator for target URL. </string>
+    <string name="report_to_admin">Do you want to report any issues to your administrator?</string>
 </resources>

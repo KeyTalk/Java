@@ -16,4 +16,10 @@
         android:title="@string/rccd_import"
         android:icon="@android:drawable/ic_menu_view"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_report"
+        android:title="@string/report_button"
+        android:icon="@android:drawable/ic_menu_report_image"
+        app:showAsAction="always" />
+
 </menu>

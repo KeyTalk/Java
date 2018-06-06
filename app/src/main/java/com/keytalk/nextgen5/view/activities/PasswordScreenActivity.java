@@ -74,7 +74,7 @@ public class PasswordScreenActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_password_screen);
         pwdEditText = (EditText) findViewById(R.id.passwordscreen_edittext);
         pwdEditText.setOnEditorActionListener(editorActionListener);
-        //pwdEditText.setText("123457");
+
         TextView pwdScreenText = (TextView) findViewById(R.id.passwordscreen_text);
         Intent intent = getIntent();
         if (intent != null) {
