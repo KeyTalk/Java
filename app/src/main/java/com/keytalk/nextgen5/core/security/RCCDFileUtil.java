@@ -21,8 +21,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static com.keytalk.nextgen5.core.security.SecurityConstants.ERROR_VALIDATION_OPERATIONS;
-
 /*
  * Class  :  RCCDFileUtil
  * Description : An class for handle all rccd file operations like save,delete, modification etc
@@ -197,7 +195,7 @@ public class RCCDFileUtil {
                 //new coder done here
                 outputStream =  DataFileHandler.createOutputFile(rccdFileName, rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR);
                 DataFileHandler.writeToStream(inputStream, outputStream);
-                FileCompression.unzip(rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR + rccdFileName, rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR);
+                boolean unzipStatus = FileCompression.unzip(rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR + rccdFileName, rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR);
                 rccdCommonFile = new File(rccdFilePath, rccdFileName);
                 if (rccdCommonFile.exists()) {
                     rccdCommonFile.delete();
@@ -212,7 +210,10 @@ public class RCCDFileUtil {
                         if (tempFile.isDirectory()) {
                             deleteRecursive(tempFile);
                         }
-                        returnMessage = SecurityConstants.ERROR_VALIDATION_OPERATIONS;
+                        if(!unzipStatus)
+                            returnMessage = SecurityConstants.ERROR_UNZIP_OPERATIONS;
+                        else
+                            returnMessage = SecurityConstants.ERROR_VALIDATION_OPERATIONS;
                         rccdFileDetails[0] = returnMessage;
                         return rccdFileDetails;
                     }

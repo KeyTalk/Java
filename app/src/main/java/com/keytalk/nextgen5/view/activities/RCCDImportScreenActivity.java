@@ -450,6 +450,16 @@ public class RCCDImportScreenActivity extends AppCompatActivity implements
             DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title),
                     "Provider "+providerName+" ("+serviceCount+" Services) was imported from the RCCD file", getString(R.string.OK_text), null);
             alertDialog.show(getSupportFragmentManager(), "dialog");
+        } else if(downloadStatus == AppConstants.DIALOG_RCCD_INVALID_ZIP_FILE_RESPONSE) {
+            alertType = AppConstants.ALERT_DIALOG_TYPE_RCCD_FROM_URL_FAILURE;
+            DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title),
+                    getString(R.string.invalid_rccd_zip_download_response), getString(R.string.report_button), getString(R.string.cancel_text));
+            alertDialog.show(getSupportFragmentManager(), "dialog");
+        } else if(downloadStatus == AppConstants.DIALOG_RCCD_INVALID_CA_FILE_RESPONSE) {
+            alertType = AppConstants.ALERT_DIALOG_TYPE_RCCD_FROM_URL_FAILURE;
+            DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title),
+                    getString(R.string.invalid_rccd_ca_download_response), getString(R.string.report_button), getString(R.string.cancel_text));
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else {
             alertType = AppConstants.ALERT_DIALOG_TYPE_RCCD_FROM_URL_FAILURE;
             DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title),

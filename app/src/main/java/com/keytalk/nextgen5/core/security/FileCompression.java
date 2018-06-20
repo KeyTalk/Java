@@ -65,6 +65,7 @@ public class FileCompression {
                 unzipEntry(zipfile, entry, destinationPath);
             }
         } catch (Exception e) {
+            RCCDFileUtil.e("FileCompression", "Unzip Exception : "+e.toString());
             return false;
         }
         return true;

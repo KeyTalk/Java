@@ -48,6 +48,7 @@ public final class SecurityConstants {
     protected static final String ERROR_FILE_OPERATIONS = "ERROR_FILE_OPERATIONS";
     protected static final String SUCESS_FILE_OPERATIONS = "SUCESS_FILE_OPERATIONS";
     protected static final String ERROR_VALIDATION_OPERATIONS = "ERROR_VALIDATION_OPERATIONS";
+    protected static final String ERROR_UNZIP_OPERATIONS = "ERROR_UNZIP_OPERATIONS";
     protected static final String FRONT_SLASH = "/";
 
     protected static final int BUFFER = 2048;
@@ -55,6 +56,7 @@ public final class SecurityConstants {
     protected static final int DIALOG_SUCESS_IMPORT_RCCD_FILE = 5005;
     protected static final int DIALOG_NO_DATA_IN_RESPONSE = 5002;
     protected static final int DIALOG_INVALID_DATA_IN_RCCD_EMAIL = 5004;
-    protected static final int DIALOG_RCCD_INVALID_CA_FILE_RESPONSE = 5025;
+    protected static final int DIALOG_RCCD_INVALID_CA_FILE_RESPONSE = 5034;
+    protected static final int DIALOG_RCCD_INVALID_ZIP_FILE_RESPONSE = 5033;
 
 }

@@ -744,6 +744,8 @@ public class KeyTalkCommunicationManager extends CommunicationViewHelper {
                         // failed something went wrong
                         if(rccdFileImportResponseData.getResponseHeader().getFileOperationStatus().equals(SecurityConstants.ERROR_VALIDATION_OPERATIONS)) {
                             processStatus = SecurityConstants.DIALOG_RCCD_INVALID_CA_FILE_RESPONSE;
+                        } else if(rccdFileImportResponseData.getResponseHeader().getFileOperationStatus().equals(SecurityConstants.ERROR_UNZIP_OPERATIONS)) {
+                            processStatus = SecurityConstants.DIALOG_RCCD_INVALID_ZIP_FILE_RESPONSE;
                         } else {
                             processStatus = SecurityConstants.DIALOG_INVALID_DATA_IN_RCCD_RESPONSE;
                         }

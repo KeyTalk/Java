@@ -86,6 +86,8 @@ public final class AppConstants {
     public static final int DIALOG_PERMISSION_DENIED_MSG = 5030;
     public static final int DIALOG_EMPTY_TARGET_URL = 5031;
     public static final int DIALOG_REPORT_TO_ADMIN = 5032;
+    public static final int DIALOG_RCCD_INVALID_ZIP_FILE_RESPONSE = 5033;
+    public static final int DIALOG_RCCD_INVALID_CA_FILE_RESPONSE = 5034;
     public static final int REQUEST_CODE_CERT_REQUEST_CREDENTIAL_ACTIVITY = 10010;
     public static final int REQUEST_CODE_CERT_INSTALL_ACTIVITY = 10011;
     public static final int REQUEST_CODE_RESET_PWD_ACTIVITY = 10012;

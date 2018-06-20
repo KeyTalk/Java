@@ -13,6 +13,8 @@
     <string name="no_values_entered">Please enter a valid URL that you would like to import.</string>
     <string name="empty_request_response">Sorry, your search found no result.\nPlease try again.</string>
     <string name="invalid_rccd_download_response">Downloaded RCCD file is invalid. Please check your entered URL correctly.</string>
+    <string name="invalid_rccd_zip_download_response">Unzipping of downloaded rccd file is failed. Please contact your admin.</string>
+    <string name="invalid_rccd_ca_download_response">File system error. Unable to process the downloaded rccd file and please contact your admin.</string>
     <string name="invalid_rccd_checksum_response">Sorry, downloaded RCCD file do not have valid certificate. Please try again.</string>
     <string name="invalid_rccd_download_email">Downloaded RCCD file is invalid. Please try again.</string>
     <string name="sucess_rccd_download" formatted ="false">Provider %s (%s Services) was imported from the RCCD file</string>
