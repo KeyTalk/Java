@@ -134,6 +134,10 @@ public class KeyTalkCommunicationManager extends CommunicationViewHelper {
         return RCCDFileUtil.saveLogcatToFile(context);
     }
 
+    public static String getLogContents(Context context) {
+        return RCCDFileUtil.getLogContents(context);
+    }
+
     public static Uri getLogDetailsAsUri(Context context) {
         //return Uri.parse("file:/"+Environment.getExternalStorageDirectory().getAbsolutePath()+SecurityConstants.KEYTALK_LOGFILE_NAME);
         return RCCDFileUtil.getLogDetailsAsUri(context);

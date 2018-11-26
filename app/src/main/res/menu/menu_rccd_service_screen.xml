@@ -14,12 +14,12 @@
     <item
         android:id="@+id/action_services"
         android:title="@string/rccd_import"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_report"
         android:title="@string/report_button"
-        android:icon="@android:drawable/ic_menu_report_image"
+        android:icon="@drawable/ic_contact_mail_white_24dp"
         app:showAsAction="always" />
 
 </menu>

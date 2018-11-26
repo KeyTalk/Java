@@ -46,9 +46,9 @@ public class RCCDFileUtil {
     protected static boolean saveLogcatToFile(Context context) {
         boolean isSucess = false;
         StringBuilder logs = new StringBuilder();
-        int pid = android.os.Process.myPid();
-        String pidPattern = String.format("%d):", pid);
         try {
+            int pid = android.os.Process.myPid();
+            String pidPattern = String.format("%d):", pid);
             String deviceInfo ="KeyTalk Android Next Generation 5 client \n\n Device Details\n\n"+"Device      : "+KeyTalkUtils.getManufacturer() +"\n"
                     +"Model       : "+KeyTalkUtils.getModel()+"\n"+"SDK Version : "+KeyTalkUtils.getAndroidVersion()+"\n"
                     +"OS Version  : "+KeyTalkUtils.getAndroidOS()+"\n\nApplication Log \n\n";
@@ -114,6 +114,43 @@ public class RCCDFileUtil {
             return isSucess;
         }
     }
+
+
+    protected static String getLogContents(Context context) {
+        boolean isSucess = false;
+        StringBuilder logs = new StringBuilder();
+        try {
+            int pid = android.os.Process.myPid();
+            String pidPattern = String.format("%d):", pid);
+            String deviceInfo ="KeyTalk Android Next Generation 5 client \n\n Device Details\n\n"+"Device      : "+KeyTalkUtils.getManufacturer() +"\n"
+                    +"Model       : "+KeyTalkUtils.getModel()+"\n"+"SDK Version : "+KeyTalkUtils.getAndroidVersion()+"\n"
+                    +"OS Version  : "+KeyTalkUtils.getAndroidOS()+"\n\nApplication Log \n\n";
+            logs.append(deviceInfo);
+            Process process = new ProcessBuilder().command("logcat", "-t", "200", "-v", "time").redirectErrorStream(true).start();
+            InputStream in = null;
+            try {
+                in = process.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains(pidPattern)) {
+                        logs.append(line).append("\n");
+                    }
+                }
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        } catch (IOException e) {
+        } finally {
+            return logs.toString();
+        }
+    }
+
 
     protected static Uri getLogDetailsAsUri(Context context) {
         Uri uri = null;

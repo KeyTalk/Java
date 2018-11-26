@@ -13,12 +13,12 @@
     <string name="embedded_browser">Embedded</string>
     <string name="native_browser">Native</string>
     <string name="reset_text">Reset</string>
-    <string name="reset_all_text">Reset All</string>
-    <string name="reset_session_text">Reset Session</string>
+    <string name="reset_all_text">Reset All From App</string>
+    <string name="reset_session_text">Reset Session From App</string>
     <string name="browser_message_text">Please select your browser which will be used for load the page.</string>
     <string name="browser_message_text_hint">Please select your browser which will be used for load the page. Do you want to continue?</string>
-    <string name="reset_message_text">This removes all previously imported providers,services and related certificates.</string>
-    <string name="reset_session_message_text">This removes all previously imported certificates.</string>
+    <string name="reset_message_text">This removes all previously imported providers,services and related certificates form application.</string>
+    <string name="reset_session_message_text">This removes all previously imported certificates form application.</string>
     <string name="url_message_text">Enter a URL that points to an RCCD file.\n It is also possible to import an RCCD via an e-mail attachment.</string>
     <string name="email_message_text">It is also possible to import an RCCD via an e-mail attachment.</string>
     <string name="view_client_identifier_text">View client identifier</string>
@@ -44,7 +44,7 @@
     <string name="email_rccd_import_confirm_text">Do you want to open this file on KeyTalk?</string>
     <string name="emailscreen_email_address">androidsupport@keytalk.com</string>
     <string name="emailscreen_subject">KeyTalk Android client - Error report</string>
-    <string name="emailscreen_message">This is an e-mail to the KeyTalk support desk.\nPlease replace this text with a description of the problem you are experiencing, and what you were doing when the problem occurred.\n\nThe attached log file is required to let us help you as efficient as possible. It does not contain any personal information.</string>
+    <string name="emailscreen_message">This is an e-mail to the KeyTalk support desk.\nPlease replace this text with a description of the problem you are experiencing, and what you were doing when the problem occurred.\n\nThe attached log file is required to let us help you as efficient as possible. It does not contain any personal information.\n\n</string>
     <string name="import_rccd_alert_title">Import RCCD</string>
     <string name="view_client_identifier_message">During a support call,we may ask you to provide this mobile device\'s unique number(for example, to block it in case it gets stolen).Please note down the following number and store it in safe place:\n\n%s</string>
     <string name="permission_denied_message">You have denied some of the required permissions and application functionality  may not work as expected. Would you like to give the permissions? </string>

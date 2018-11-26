@@ -469,15 +469,34 @@ public class RCCDImportScreenActivity extends AppCompatActivity implements
     }
 
     public void reportWithEmail() {
-        boolean isSucess = KeyTalkCommunicationManager.isLogFileAvailable(this);
+        boolean isSucess = false;
+        try {
+            isSucess = KeyTalkCommunicationManager.isLogFileAvailable(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.emailscreen_email_address)});
         email.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.emailscreen_subject));
-        email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message));
+        //email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message));
+        if(isSucess) {
+            email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
+        } else {
+            try {
+                email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message) + KeyTalkCommunicationManager.getLogContents(this));
+            } catch (Exception e) {
+                e.printStackTrace();
+                email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
+            }
+        }
         email.setType("message/rfc822");
         if(isSucess) {
-            Uri uri = KeyTalkCommunicationManager.getLogDetailsAsUri(this);
-            email.putExtra(Intent.EXTRA_STREAM,uri);
+            try {
+                Uri uri = KeyTalkCommunicationManager.getLogDetailsAsUri(this);
+                email.putExtra(Intent.EXTRA_STREAM,uri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
