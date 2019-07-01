@@ -1,7 +1,9 @@
 package com.keytalk.nextgen5.core.security;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.keytalk.nextgen5.util.PreferenceManager;
+import com.keytalk.nextgen5.view.util.AppConstants;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -12,16 +14,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.KeyStore;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 /*
  * Class  :  KeyTalkHttpProtocol
@@ -54,6 +61,7 @@ public class KeyTalkHttpProtocol {
         while ((line = rd.readLine()) != null) {
             total.append(line);
         }
+
         return total.toString();
     }
 
@@ -70,7 +78,32 @@ public class KeyTalkHttpProtocol {
                 return false;
             }
             InputStream caInputStream = new BufferedInputStream(new FileInputStream(comcacertPath));
-            Certificate ca = null;
+
+
+            // now I get the X509 certificate from the PEM string
+            X509Certificate certificate = (X509Certificate) cf.generateCertificate(caInputStream);
+            String alias = "alias";//cert.getSubjectX500Principal().getName();
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            trustStore.load(null);
+            trustStore.setCertificateEntry(alias, certificate);
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("X509");
+            kmf.init(trustStore, null);
+            KeyManager[] keyManagers = kmf.getKeyManagers();
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+            tmf.init(trustStore);
+            TrustManager[] trustManagers = tmf.getTrustManagers();
+
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagers, trustManagers, null);
+                  /*  URL url = new URL(urlString);
+                    conn = (HttpsURLConnection) url.openConnection();*/
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+
+
+
+            /*Certificate ca = null;
             try {
                 ca = cf.generateCertificate(caInputStream);
             } catch (Exception e) {
@@ -83,15 +116,35 @@ public class KeyTalkHttpProtocol {
             String keyStoreType = KeyStore.getDefaultType();
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null, null);
+
             keyStore.setCertificateEntry("ca", ca);
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("X509");
+            kmf.init(keyStore, null);
+            KeyManager[] keyManagers = kmf.getKeyManagers();
+
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-            tmf.init(keyStore);
+            tmf.init(keyStore);*/
+
+
+
+
+
             //sslContext = SSLContext.getInstance("TLS");
             //sslContext.init(null, tmf.getTrustManagers(), null);
 
-            sslContext  = SSLContext.getInstance("TLSv1.2");
-            sslContext.init(null, tmf.getTrustManagers(), null);
+            //sslContext  = SSLContext.getInstance("TLSv1.2");
+            // sslContext.init(keyManagers, tmf.getTrustManagers(), null);
+
+           /* HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            Intent installIntent = KeyChain.createInstallIntent();
+            installIntent.putExtra(KeyChain.EXTRA_CERTIFICATE, certificate.getEncoded());
+            installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(installIntent);*/
+
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,7 +152,7 @@ public class KeyTalkHttpProtocol {
         }
     }
 
-    protected String phase1HandshakeHello(final String jsonObject) throws  IOException {
+    protected String phase1HandshakeHello(final String jsonObject, Context mContext) throws  IOException {
         HttpsURLConnection httpsURLConnection = null;
         String serverMessage = null;
         try {
@@ -126,6 +179,7 @@ public class KeyTalkHttpProtocol {
                     }
                 }
                 serverMessage = inputStreamToString(httpsURLConnection.getInputStream());
+                PreferenceManager.put(mContext, AppConstants.COOKIE,receivedCookie);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,6 +207,7 @@ public class KeyTalkHttpProtocol {
             int responseCode = httpsURLConnection.getResponseCode();
             if (responseCode == 200) {
                 serverMessage = inputStreamToString(httpsURLConnection.getInputStream());
+               RCCDFileUtil.e("Credential request successfully completed");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,9 +224,38 @@ public class KeyTalkHttpProtocol {
         HttpsURLConnection httpsURLConnection = null;
         String serverMessage[] = null;
         try {
+
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
+            SSLContext sc = null;
+            sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            //HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
             URL url = new URL(mUrl + jsonObject);
             httpsURLConnection = (HttpsURLConnection)  url.openConnection();
-            httpsURLConnection.setSSLSocketFactory(sslContext.getSocketFactory());
+            httpsURLConnection.setSSLSocketFactory(sc.getSocketFactory());
+            httpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
             httpsURLConnection.setRequestMethod("GET");
             httpsURLConnection.setConnectTimeout(25000);
             httpsURLConnection.setReadTimeout(25000);
@@ -182,6 +266,7 @@ public class KeyTalkHttpProtocol {
                 serverMessage = new String[2];
                 serverMessage[0] = receivedCookie;
                 serverMessage[1] = inputStreamToString(httpsURLConnection.getInputStream());
+                RCCDFileUtil.e("Certificate:- ", RCCDFileUtil.getTime()+serverMessage[1] );
             }
         } catch (Exception e) {
             e.printStackTrace();

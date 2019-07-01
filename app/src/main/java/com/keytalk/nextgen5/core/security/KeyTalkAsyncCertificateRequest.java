@@ -44,17 +44,29 @@ public class KeyTalkAsyncCertificateRequest {
     private class HandshakeUntilAuthentication extends ErrorHandlingAsyncTask<Void, Void, Void> {
         @Override
         protected Void realDoInBackground(Void... params) throws Exception {
-            RCCDFileUtil.e("KeyTalk","Phase 1 Hello request is getting starting here");
-            protocol.phase1HandshakeHello();
-            RCCDFileUtil.e("KeyTalk","Phase1 Handshake request is getting starting here");
-            protocol.phase1Handshake();
-            return null;
+            try {
+                RCCDFileUtil.e("KeyTalk", "Phase 1 Hello request is getting starting here");
+                protocol.phase1HandshakeHello();
+                RCCDFileUtil.e("KeyTalk", "Phase1 Handshake request is getting starting here");
+                protocol.phase1Handshake();
+                return null;
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+                return null;
+            }
         }
 
         @Override
         protected void onSuccess(Void result) throws Exception {
-            RCCDFileUtil.e("KeyTalk","Phase1 Handshaking completed sucessfully");
-            new RequestAuthenticationChallenge().execute();
+            try {
+                RCCDFileUtil.e("KeyTalk", "Phase1 Handshaking completed sucessfully");
+                new RequestAuthenticationChallenge().execute();
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+
+            }
         }
 
         @Override
@@ -120,42 +132,43 @@ public class KeyTalkAsyncCertificateRequest {
 
         @Override
         protected void onSuccess(AuthResult result) throws Exception {
-            if (result.isOK()) {
-				if(result.getExpirySeconds() >= 0 && result.getExpirySeconds() < 7 ) {
-					RCCDFileUtil.e("KeyTalkAysncCertificate","SupplyCredentials sucessfully completed but user can reset password "+result.getExpirySeconds());
-					suppliedCreds.setExpiryDate(result.getExpirySeconds());
-					client.resetCredentialOption(suppliedCreds, this);
-				} else {
-					RCCDFileUtil.e("KeyTalk","SupplyCredentials sucessfully completed "+result.getExpirySeconds());
-					new GetMessages().execute();
-				}
-            }
-            if (result.isDelay()) {
-                RCCDFileUtil.e("KeyTalk","Supy credentials completed, but send wrong credentials ");
-                client.invalidCredentialsDelay(result.getSeconds(), this);
-            }
+            try {
+                if (result.isOK()) {
+                    if (result.getExpirySeconds() >= 0 && result.getExpirySeconds() < 7) {
+                        RCCDFileUtil.e("KeyTalkAysncCertificate", "SupplyCredentials sucessfully completed but user can reset password " + result.getExpirySeconds());
+                        suppliedCreds.setExpiryDate(result.getExpirySeconds());
+                        client.resetCredentialOption(suppliedCreds, this);
+                    } else {
+                        RCCDFileUtil.e("KeyTalk", "SupplyCredentials sucessfully completed " + result.getExpirySeconds());
+                        new GetMessages().execute();
+                    }
+                }
+                if (result.isDelay()) {
+                    RCCDFileUtil.e("KeyTalk", "Supy credentials completed, but send wrong credentials ");
+                    client.invalidCredentialsDelay(result.getSeconds(), this);
+                }
 
-            if (result.isLocked()) {
-                RCCDFileUtil.e("KeyTalk","Authentication successfully completed but user got locked");
-                throw new KeyTalkUserLockedOutException("User locked out of system");
-            }
-            if(result.isExpired()) {
-                RCCDFileUtil.e("KeyTalk","Authentication successfully completed but user password got expired");
-                suppliedCreds.setNewPasswordRequested(true);
-                client.requestResetCredentials(suppliedCreds, this);
-            }
-            if(result.isChallenge()) {
-                RCCDFileUtil.e("KeyTalk","Phase3 successfully completed but server sending challenge");
-                suppliedCreds.setChallengeRequested(true);
-                suppliedCreds.setChallengeData(result.getChallengeData());
-                client.requestChallengeCredentials(suppliedCreds, this);
-                //throw new KeyTalkUserLockedOutException("Authentication completed, but server required some challenges which not supporting in this android build");
-            }
-            if(result.isAuthReqChallenge()) {
-                RCCDFileUtil.e("KeyTalk","Phase2 sucessfully completed challenge "+result.getAuthReqChallengeData());
-                throw new KeyTalkUserLockedOutException("Authentication completed, but server required some challenges which not supporting in this android build");
-            }
-            assert (false); // Should never happen
+                if (result.isLocked()) {
+                    RCCDFileUtil.e("KeyTalk", "Authentication successfully completed but user got locked");
+                    throw new KeyTalkUserLockedOutException("User locked out of system");
+                }
+                if (result.isExpired()) {
+                    RCCDFileUtil.e("KeyTalk", "Authentication successfully completed but user password got expired");
+                    suppliedCreds.setNewPasswordRequested(true);
+                    client.requestResetCredentials(suppliedCreds, this);
+                }
+                if (result.isChallenge()) {
+                    RCCDFileUtil.e("KeyTalk", "Phase3 successfully completed but server sending challenge");
+                    suppliedCreds.setChallengeRequested(true);
+                    suppliedCreds.setChallengeData(result.getChallengeData());
+                    client.requestChallengeCredentials(suppliedCreds, this);
+                    //throw new KeyTalkUserLockedOutException("Authentication completed, but server required some challenges which not supporting in this android build");
+                }
+                if (result.isAuthReqChallenge()) {
+                    RCCDFileUtil.e("KeyTalk", "Phase2 sucessfully completed challenge " + result.getAuthReqChallengeData());
+                    throw new KeyTalkUserLockedOutException("Authentication completed, but server required some challenges which not supporting in this android build");
+                }
+                assert (false); // Should never happen
 
 
 
@@ -209,6 +222,10 @@ public class KeyTalkAsyncCertificateRequest {
 				client.requestChallengeCredentials(suppliedCreds, this);
 			}
 			assert (false); // Should never happen*/
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+            }
         }
 
         @Override
@@ -307,15 +324,27 @@ public class KeyTalkAsyncCertificateRequest {
     private class GetMessages extends ErrorHandlingAsyncTask<Void, Void, String[]> {
         @Override
         protected String[] realDoInBackground(Void... params) throws Exception {
-            RCCDFileUtil.e("KeyTalk","Phase3 getting messages");
-            return protocol.getPhase3LastMessageFromServer();
+            try {
+                RCCDFileUtil.e("KeyTalk", "Phase3 getting messages");
+                return protocol.getPhase3LastMessageFromServer();
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+                return null;
+            }
         }
 
         @Override
         protected void onSuccess(String[] msgresult) throws Exception {
-            RCCDFileUtil.e("KeyTalk","Phase3 GetMessages Sucess");
-            serverMsg = msgresult;
-            new HandshakeAfterAuthentication().execute();
+            try {
+                RCCDFileUtil.e("KeyTalk", "Phase3 GetMessages Sucess");
+                serverMsg = msgresult;
+                new HandshakeAfterAuthentication().execute();
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+
+            }
         }
 
         @Override
@@ -335,22 +364,35 @@ public class KeyTalkAsyncCertificateRequest {
         protected CertificateInfo realDoInBackground(Void... params)
                 throws Exception {
             // FIXME: Implement phase 4
-            RCCDFileUtil.e("KeyTalk","Phase3 certificate request starting here");
-            return protocol.getCertificate();
+            try {
+                RCCDFileUtil.e("KeyTalk", "Phase3 certificate request starting here");
+                return protocol.getCertificate();
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
+                return null;
+            }
         }
 
         @Override
         protected void onSuccess(CertificateInfo result) throws Exception {
-            if(serviceURIArray != null && serviceURIArray.length > 0) {
-                result.setURL(true);
-                result.setUrlString(serviceURIArray[0]);
+            try {
+                if (serviceURIArray != null && serviceURIArray.length > 0) {
+                    result.setURL(true);
+                    result.setUrlString(serviceURIArray[0]);
+                }
+                client.certificateRetrieved(result, selectedUserName, serverMsg);
+            }catch (Exception e)
+            {
+                RCCDFileUtil.e("KeyTalkTest",e.getMessage());
             }
-           client.certificateRetrieved(result ,selectedUserName,serverMsg);
         }
 
         @Override
         protected void onError(Throwable t) {
             RCCDFileUtil.e("KeyTalk","Phase5 Certiciate error : "+t.getMessage());
+            RCCDFileUtil.e("KeyTalkTest",t.getMessage());
+
             client.errorOccurred(t);
         }
     }

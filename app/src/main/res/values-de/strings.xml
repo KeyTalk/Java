@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  strings.xml
+  ~ Description :
+  ~
+  ~ Created By Jobin Mathew on 2019
+  ~ All rights reserved @ keytalk.com
+  -->
+
+
+<resources>
+
+    <string name="app_name">KeyTalk5</string>
+    <string name="import_rccd">IMPORT-konfiguration</string>
+    <string name="rccd_import_url_hint_text">Geben Sie die URL der Konfigurationsdatei (.rccd) ein.</string>
+    <string name="embedded_browser">Eingebettet</string>
+    <string name="native_browser">Eigenes</string>
+    <string name="reset_text">Zurücksetzen</string>
+    <string name="reset_all_text">Alle App-Daten löschen</string>
+    <string name="reset_session_text">Zuletzt ausgegebenes Zertifikat entfernen</string>
+    <string name="browser_message_text">Bitte wählen Sie Ihren browser zum Laden der Seite. Wollen Sie fortfahren?</string>
+    <string name="browser_message_text_hint">Bitte wählen Sie Ihren browser zum Laden der Seite. Wollen Sie fortfahren?</string>
+    <string name="reset_message_text">Dadurch werden alle zuvor importierten  providers, services und zugehörigen Zertifikaten entfernt.</string>
+    <string name="reset_session_message_text">Dadurch werden alle zuvor importierten Zertifikaten entfernt.</string>
+    <string name="url_message_text">Geben Sie die URL ein die auf ein RCCD Datei verweist.\n Es ist auch möglich ein RCCD über einen E-mail Anhang zu importieren.</string>
+    <string name="email_message_text">Es ist auch möglich, eine KeyTalk-Konfigurationsdatei (RCCD) über einen E-Mail-Anhang zu importieren.</string>
+    <string name="view_client_identifier_text">Client-ID anzeigen.</string>
+    <string name="null_value">""</string>
+    <string name="cancel_text">Stornieren</string>
+    <string name="yes_text">Ja</string>
+    <string name="No_text">Nein</string>
+    <string name="report_button">Berichterstattung</string>
+    <string name="OK_text">OK</string>
+    <string name="install_text">Installieren</string>
+    <string name="services">Dienstleistungen</string>
+    <string name="open_text">Öffnen</string>
+    <string name="loading_text">Wird geladen&#8230;</string>
+    <string name="url_error_message">Bitte geben Sie eine gültige URL ein, die Sie importieren möchten.</string>
+    <string name="update_url_message">Möchten Sie die Server URL ändern?</string>
+    <string name="same_url_message">Bitte ändern Sie Ihre URL.</string>
+    <string name="retry">Wiederholen</string>
+    <string name="urlscreen_text">Bitte geben Sie die Server-URL ein.</string>
+    <string name="urlscreen_default_text">Server URL</string>
+    <string name="update_text">Aktualisieren</string>
+    <string name="app_webview">KeyTalk Web View</string>
+    <string name="group_header">Keytalk_Group_Header</string>
+    <string name="email_rccd_import_confirm_text">Möchten Sie diese Datei mit Keytalk App öffnen?</string>
+    <string name="emailscreen_email_address">androidsupport@keytalk.com</string>
+    <string name="emailscreen_subject">KeyTalk Android Klient - Fehlermeldung</string>
+    <string name="emailscreen_message">Dies ist eine E-mail an den Keytalk Supportdesk. Bitte ersetzen Sie diesen Tekst durch eine Beschreibung des Problems das aufgetreten ist und was Sie getan haben als das Problem auftrat. Die angehängte Protokolidatei ist erfordlich damit wir Sie so effiziënt wie möglich unterstützen können. Es enthhält keine persönlichen Informationen.\n\n</string>
+    <string name="import_rccd_alert_title">IMPORT-konfiguration</string>
+    <string name="view_client_identifier_message">Während eines Supportanrufs bitten wir Sie möglicherweise die eindeutige Nummer dieses Mobiltelefons anzugeben (zum Beispiel um es zu blockeren falls es gestohlen wird. Bitte notieren Sie sich de folgende nummer und bewahren Sie sie an einem sicheren Ort auf: \n\n%s</string>
+    <string name="permission_denied_message">Sie haben einige der erforderlichen Berechtigungen abgelehnt, und die Anwendungsfunktionalität funktioniert möglicherweise nicht wie erwartet. Möchten Sie die Berechtigungen erteilen? </string>
+    <string name="phonestat_permission_alert_message">Ihre Anfrage kann nicht ohne Erlaubnis verarbeitet werden, und die Anwendungsfunktionalität funktioniert möglicherweise nicht wie erwartet!</string>
+    <string name="countdown_default_text">9</string>
+    <string name="usernamescreen_header">Nutzername</string>
+    <string name="usernamescreen_text">Geben Sie einen Benutzernamen ein oder wählen Sie eine der Voreinstellungen aus.</string>
+    <string name="usernamescreen_default_text">Nutzername</string>
+    <string name="usernamescreen_hardcoded_user">testuser@keytalk.local</string>
+    <string name="usernamescreen_error_message_header">Error</string>
+    <string name="usernamescreen_error_message">Bitte geben Sie einen gültigen Benutzername ein.</string>
+    <string name="usernamescreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_header">Passwort</string>
+    <string name="passwordscreen_text">Bitte geben Sie ein Passwort ein. - ‘%s’.</string>
+    <string name="passwordscreen_default_text">Passwort</string>
+    <string name="passwordscreen_header_button">Nutzername</string>
+    <string name="passwordscreen_error_message_header">Error</string>
+    <string name="passwordscreen_error_message">Ungültige Anmeldeinformationen</string>
+    <string name="password_error_message">Bitte geben Sie ein gültiges Passwort ein.</string>
+    <string name="passwordscreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_header">Error</string>
+    <string name="passwordscreen_communication_message">Kommunikationsproblem.</string>
+    <string name="passwordscreen_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_button_2">Bericht</string>
+    <string name="authenticationpin_header">PIN</string>
+    <string name="authenticationpin_text">Bitte geben Sie eine PIN für den Benutzer mit Benutzername ein. ‘%s’</string>
+    <string name="authenticationpin_default_text">123</string>
+    <string name="authenticationpin_header_button">Passwort</string>
+    <string name="authenticationpin_error_message_header">Error</string>
+    <string name="authenticationpin_error_message">Bitte geben Sie eine gültige PIN-Nummer ein.</string>
+    <string name="authenticationpin_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_header">Error</string>
+    <string name="authenticationpin_communication_message">Kommunikationsproblem.</string>
+    <string name="authenticationpin_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_button_2">Bericht</string>
+    <string name="responsescreen_header">Spezifische Frage / Antwort</string>
+    <string name="responsescreen_text">Bitte geben Sie eine Antwort auf die konkrete Frage ‘%s’</string>
+    <string name="new_responsescreen_text">Bitte geben Sie eine Antwort auf die konkrete Frage</string>
+    <string name="responsescreen_default_text">Antwort</string>
+    <string name="responsescreen_header_button">Stornieren</string>
+    <string name="change_password">Ändere das Passwort</string>
+    <string name="old_password">Altes Passwort</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="retype_password">Passwort erneut eingeben</string>
+    <string name="change_button_text">Veränderung</string>
+    <string name="invalid_oldpassword">Bitte geben Sie ein gültiges altes Passwort ein.</string>
+    <string name="invalid_newpassword">Bitte geben Sie ein gültiges neues Passwort ein.</string>
+    <string name="invalid_retypepassword">Bitte geben Sie das neue Passwort erneut ein</string>
+    <string name="same_old_newpassword">Das alte Passwort und das neue Passwort müssen nicht identisch sein.</string>
+    <string name="different_new_retypepassword">Neues und erneutes Kennwort müssen identisch sein.</string>
+    <string name="password_updated">Passwort wurde aktualisiert, bitte mit neuem Passwort anmelden</string>
+    <string name="change_password_message">Bitte geben Sie ein neues Passwort für den Benutzer mit dem Benutzernamen \'%s\' ein und klicken Sie auf Ändern. \n Passwort muss aus mindestens sieben Zeichen mit einer Ziffer und einem Sonderzeichen bestehen.</string>
+    <string name="rccd_import">Konfigurationsdatei importieren</string>
+    <string name="language_change">Change Language</string>
+    <string name="Language_header">Language:</string>
+    <string-array name="language_arrays">
+        <item>Select Language</item>
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Dutch</item>
+    </string-array>
+    <string name="ok">OK</string>
+    <string name="cancel">STORNIEREN</string>
+    <string name="about">Über uns</string>
+    <string name="version"><b>Softwareversion</b></string>
+    <string name="intall_date"><b>Installationsdatum</b></string>
+
+    <string name="authorise_title">Anfrage genehmigen</string>
+    <string name="authorise_msg">Um dem Serverzertifikat zu vertrauen, "autorisieren" Sie bitte weitere Authentifizierungen und installieren Sie den Vertrauensdateien oder wahlen Sie "Abbrechen". </string>
+    <string name="about_message">Mit dieser KeyTalk-App können Kunden, Mitarbeiter und Partner von Unternehmen, die die Lebenszyklus- und Verteilungslösung für KeyTalk-Zertifikate verwenden, digitale Zertifikate und zugehörige Kryptoschlüssel abrufen. Diese Zertifikate und Schlüssel werden für eine starke Authentifizierung und verschlüsselte Kommunikation mit Unternehmenswebsites sowie für VPNs verwendet. Sie werden häufig verwendet, um die E-Mail-Verschlüsselung und die digitale E-Mail-Signatur in Kombination mit dem E-Mail-Client auf Ihrem Android-Gerät zu aktivieren.</string>
+    <string name="service_title">Wählen Sie einen Dienst aus, um Ihr Zertifikat und Ihren Verschlüsselungsschlüssel anzufordern </string>
+    <string name="countdown_msg">Falsche Authentifizierungsdaten, bitte warten </string>
+    <string name="trust">Vertrauen</string>
+</resources>

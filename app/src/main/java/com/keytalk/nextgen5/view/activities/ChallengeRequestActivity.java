@@ -1,3 +1,11 @@
+/*
+ * Class  :  ChallengeRequestActivity
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.activities;
 
 import android.app.ProgressDialog;
@@ -10,27 +18,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.keytalk.nextgen5.R;
@@ -74,6 +72,11 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_request);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.responsescreen_header);
+        TextView header = (TextView)findViewById(R.id.header_string);
+        header.setText(R.string.responsescreen_header);
         //PageHeader pageheader = (PageHeader) findViewById(R.id.pwdPageHeader);
         //pageheader.setHeaderTitle(getString(R.string.passwordscreen_header));
         pwdEditText = (EditText) findViewById(R.id.passwordscreen_edittext);
@@ -209,10 +212,11 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
     };
 
     public void startNextActivity(final String passwordSelected) {
-        showDialog("Validating...");
+        showDialog(getString(R.string.validating));
         boolean isSucess = KeyTalkCommunicationManager.getCertificateWithChallange(passwordSelected.trim(),this);
         if (!isSucess) {
-            displayError("We are not able to process your request. Please try again.");
+            String request_try_again = getString(R.string.request_try_again);
+            displayError(request_try_again);
         }
     }
 
@@ -386,11 +390,12 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
 
         if (tryAgain != null) {
             dismissDialog();
-            showDialog("Validating...");
+            showDialog(getString(R.string.validating));
             boolean isSucess = KeyTalkCommunicationManager
                     .restartAfterDelay(tryAgain);
             if (!isSucess) {
-                displayError("We are not able to process your request. Please try again.");
+                String request_try_again = getString(R.string.request_try_again);
+                displayError(request_try_again);
             }
         }
 
@@ -424,7 +429,7 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
                     .setText(getString(R.string.password_expire_option));
         else {
             //dialogTxtMessage.setText(getString(R.string.password_expire_option_more,days));
-            String msg = "Your password will expire within " + days + " days. Do you want to reset the password";
+            String msg = String.valueOf(R.string.password_expire_string + days + R.string.days_reset_password);
             dialogTxtMessage.setText(msg);
         }
         dialogTxtMessage.setTextSize(18);
@@ -437,11 +442,12 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
                                 dialog.cancel();
-                                showDialog("Resetting...");
+                                showDialog(getString(R.string.resetting));
                                 boolean isSucess = KeyTalkCommunicationManager
                                         .resetPasswordNow();
                                 if (!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         })
@@ -450,11 +456,12 @@ public class ChallengeRequestActivity extends AppCompatActivity implements OnCli
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
                                 dialog.cancel();
-                                showDialog("Validating...");
+                                showDialog(getString(R.string.validating));
                                 boolean isSucess = KeyTalkCommunicationManager
                                         .resetPasswordLater();
                                 if (!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         }).show();

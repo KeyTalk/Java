@@ -1,8 +1,15 @@
+/*
+ * Class  :  ChangePasswordActivity
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -10,7 +17,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,6 +66,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.passwordscreen_header);
+        TextView header = (TextView)findViewById(R.id.header_string);
+        header.setText(R.string.passwordscreen_header);
         oldPwdEditText = (EditText) findViewById(R.id.oldpassword_edittext);
         newPwdEditText = (EditText) findViewById(R.id.newpassword_edittext);
         retypePwdEditText = (EditText) findViewById(R.id.retypepassword_edittext);
@@ -156,10 +167,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements OnClick
 
                 } else {
                     // send request
-                    showDialog("Resetting...");
+                    showDialog(getString(R.string.resetting));
                     boolean isSucess = KeyTalkCommunicationManager.resetPassword(oldPassword,newPassword, this);
                     if(!isSucess) {
-                        passwordResetError("We are not able to process your request. Please try again.");
+                        passwordResetError(getString(R.string.request_try_again));
                     }
                 }
                 break;

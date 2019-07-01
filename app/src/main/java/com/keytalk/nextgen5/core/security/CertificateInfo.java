@@ -32,7 +32,7 @@ public class CertificateInfo {
     private boolean isURL = false;
     private String urlString = null;
 
-    protected CertificateInfo(X509Certificate[] certificateChain, KeyStore keyStore, String certPassword) {
+    public CertificateInfo(X509Certificate[] certificateChain, KeyStore keyStore, String certPassword) {
         this.certificateChain = certificateChain;
         this.keyStore         = keyStore;
         this.certPassword     = certPassword;

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  strings.xml
+  ~ Description :
+  ~
+  ~ Created By Jobin Mathew on 2019
+  ~ All rights reserved @ keytalk.com
+  -->
+
+<resources>
+
+    <string name="app_name">KeyTalk5</string>
+    <string name="import_rccd">IMPORT configuatie</string>
+    <string name="rccd_import_url_hint_text">Voer de URL in van het configuratiebestand (.rccd)</string>
+    <string name="embedded_browser">Ingebed</string>
+    <string name="native_browser">Eigen</string>
+    <string name="reset_text">Reset</string>
+    <string name="reset_all_text">App data wissen</string>
+    <string name="reset_session_text">Verwijder laatste geinstalleerde certificaten</string>
+    <string name="browser_message_text">Gaarne uw browser selecteren voor het laden van de pagina. Wilt u doorgaan?</string>
+    <string name="browser_message_text_hint">Gaarne uw browser selecteren voor het laden van de pagina. Wilt u doorgaan?</string>
+    <string name="reset_message_text">Dit verwijdert alle eerder geïmporteerde providers, services en gerelateerde certificaten.</string>
+    <string name="reset_session_message_text">Dit verwijdert alle eerder geïmporteerde certificaten.</string>
+    <string name="url_message_text">Voer een URL in die naar een RCCD file verwijst.\n Het is ook mogelijk een RCCD te importeren via een E-mail bijlage.</string>
+    <string name="email_message_text">Het is ook mogelijk een KeyTalk configuratie bestand (RCCD) te importeren via een E-mail bijlage.</string>
+    <string name="view_client_identifier_text">Bekijk klant-ID</string>
+    <string name="null_value">""</string>
+    <string name="cancel_text">annuleren</string>
+    <string name="yes_text">Ja</string>
+    <string name="No_text">Nee</string>
+    <string name="report_button">Rapportage</string>
+    <string name="OK_text">OK</string>
+    <string name="install_text">Installeer</string>
+    <string name="services">Diensten</string>
+    <string name="open_text">Openen</string>
+    <string name="loading_text">Bezig met laden&#8230;</string>
+    <string name="url_error_message">Voer een geldig URL in dat u wilt importeren aub.</string>
+    <string name="update_url_message">Wilt u de server URL wijzigen?</string>
+    <string name="same_url_message">Gaarne uw URL wijzigen.</string>
+    <string name="retry">Probeer opnieuw</string>
+    <string name="urlscreen_text">Gaarne de server URL invoeren</string>
+    <string name="urlscreen_default_text">Server URL</string>
+    <string name="update_text">Bijwerken</string>
+    <string name="app_webview">KeyTalk WebView</string>
+    <string name="group_header">Keytalk_Group_Header</string>
+    <string name="email_rccd_import_confirm_text">Wilt u dit bestand openen met de KeyTalk app?</string>
+    <string name="emailscreen_email_address">androidsupport@keytalk.com</string>
+    <string name="emailscreen_subject">KeyTalk Android client - Foutmelding</string>
+    <string name="emailscreen_message">Dit is een E-mail naar de KeytTalk support desk. Gaarne deze tekst vervangen met een beschrijving van het probleem dat u ervaart en waar u mee bezig was toen het probleem optradt. Het bijgevoegde log-bestand is nodig om u zo efficiënt mogelijk te helpen. Het bevat geen persoonlijke informatie.\n\n</string>
+    <string name="import_rccd_alert_title">IMPORT configuatie</string>
+    <string name="view_client_identifier_message">Gedurende een support-call is het mogelijk dat wij u vragen het unieke nummer van dit mobiele apparaat door te geven (om het bijvoorbeeld te blokkeren in geval van diefstal). Gaarne het volgende nummer noteren en opslaan op een veilige plek.\n\n%s</string>
+    <string name="permission_denied_message">U hebt een aantal van de vereiste machtigingen geweigerd en de toepassingsfunctionaliteit werkt mogelijk niet zoals verwacht. Wilt u toestemming geven? </string>
+    <string name="phonestat_permission_alert_message">Uw aanvraag kan niet zonder toestemming worden verwerkt en de applicatie-functionaliteit werkt mogelijk niet zoals verwacht!</string>
+    <string name="countdown_default_text">9</string>
+    <string name="usernamescreen_header">Gebruikersnaam</string>
+    <string name="usernamescreen_text">Voer een gebruikersnaam in of selecteer een van de onderstaande presets.</string>
+    <string name="usernamescreen_default_text">Gebruikersnaam</string>
+    <string name="usernamescreen_hardcoded_user">testuser@keytalk.local</string>
+    <string name="usernamescreen_error_message_header">Foutmelding</string>
+    <string name="usernamescreen_error_message">Een geldige gebruikersnaam invoeren aub.</string>
+    <string name="usernamescreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_header">Wachtwoord</string>
+    <string name="passwordscreen_text">Een wachtwoord invoeren aub - ‘%s’.</string>
+    <string name="passwordscreen_default_text">Wachtwoord</string>
+    <string name="passwordscreen_header_button">Gebruikersnaam</string>
+    <string name="passwordscreen_error_message_header">Foutmelding</string>
+    <string name="passwordscreen_error_message">Ongeldige inloggegevens</string>
+    <string name="password_error_message">Een geldig wachtwoord invoeren aub.</string>
+    <string name="passwordscreen_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_header">Foutmelding</string>
+    <string name="passwordscreen_communication_message">Communicatie probleem.</string>
+    <string name="passwordscreen_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="passwordscreen_communication_message_button_2">Rapporteer</string>
+    <string name="authenticationpin_header">PIN</string>
+    <string name="authenticationpin_text">Voer een PIN in voor de gebruiker met een gebruikersnaam aub ‘%s’</string>
+    <string name="authenticationpin_default_text">123</string>
+    <string name="authenticationpin_header_button">Wachtwoord</string>
+    <string name="authenticationpin_error_message_header">Foutmelding</string>
+    <string name="authenticationpin_error_message">Voer een geldig PIN nummer in aub.</string>
+    <string name="authenticationpin_error_message_button">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_header">Foutmelding</string>
+    <string name="authenticationpin_communication_message">Communicatie probleem.</string>
+    <string name="authenticationpin_communication_message_button_1">&#160;&#160;&#160;OK&#160;&#160;&#160;</string>
+    <string name="authenticationpin_communication_message_button_2">Rapporteer</string>
+    <string name="responsescreen_header">Specifieke vraag/antwoord</string>
+    <string name="responsescreen_text">Graag een antwoord invoeren op de specifieke vraag ‘%s’</string>
+    <string name="new_responsescreen_text">Graag een antwoord invoeren op de specifieke vraag</string>
+    <string name="responsescreen_default_text">Antwoord</string>
+    <string name="responsescreen_header_button">Annuleer</string>
+    <string name="change_password">Wijzig wachtwoord</string>
+    <string name="old_password">Oud wachtwoord</string>
+    <string name="new_password">Nieuw wachtwoord</string>
+    <string name="retype_password">Wachtwoord overtypen</string>
+    <string name="change_button_text">Wijzig wachtwoord</string>
+    <string name="invalid_oldpassword">Geldig oud wachtwoord invoeren aub.</string>
+    <string name="invalid_newpassword">Geldig nieuw wachtwoord invoeren aub.</string>
+    <string name="invalid_retypepassword">Voer het nieuwe wachtwoord nog een keer in aub.</string>
+    <string name="same_old_newpassword">Oud wachtwoord en nieuw wachtwoord mogen niet hetzelfde zijn.</string>
+    <string name="different_new_retypepassword">Nieuw en opnieuw getypt wachtwoord moeten gelijk zijn.</string>
+    <string name="password_updated">Wachtwoord is vernieuwd, inloggen met nieuw wachtwoord aub.</string>
+    <string name="change_password_message">Voer een nieuw wachtwoord in voor de gebruiker met gebruikersnaam \'%s\' en klik op Wijzigen.\n Het wachtwoord moet uit minimaal zeven tekens bestaan ​​met één cijfer en één speciaal symbool.</string>
+    <string name="rccd_import">configuratie bestand importeren</string>
+    <string name="language_change">Change Language</string>
+    <string name="Language_header">Language:</string>
+    <string-array name="language_arrays">
+        <item>Select Language</item>
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Dutch</item>
+    </string-array>
+    <string name="ok">OK</string>
+    <string name="cancel">ANNULEREN</string>
+    <string name="about">Over ons</string>
+    <string name="version"><b>Versie</b></string>
+    <string name="intall_date"><b>Installatie datum</b></string>
+
+    <string name="authorise_title">Verzoek autoriseren</string>
+    <string name="authorise_msg">Om het bedrijfs certificaat te vertrouwen, "autoriseert" u verdere authenticaties en de installatie van vertrouwensbestanden of kies "Annuleren"</string>
+
+    <string name="about_message">Deze KeyTalk-app maakt het verkrijgen van digitale certificaten en bijbehorende crypto-sleutels mogelijk, voor klanten, medewerkers en partners van bedrijven die de KeyTalk-certificaatlevenscyclus- en distributie-oplossing gebruiken. Deze certificaten en sleutels worden gebruikt voor sterke authenticatie en sterk versleutelde communicatie met bedrijfswebsites, als ook VPNs en worden vaak gebruikt om e-mailversleuteling en e-mail digitale ondertekening mogelijk te maken in combinatie met de mailclient op uw Android toestel.</string>
+    <string name="service_title">Selecteer een service om uw certificaat en crypto-sleutel aan te vragen</string>
+    <string name="countdown_msg">Onjuiste authenticatiegegevens, even geduld aub</string>
+    <string name="trust">vertrouwen</string>
+</resources>
+

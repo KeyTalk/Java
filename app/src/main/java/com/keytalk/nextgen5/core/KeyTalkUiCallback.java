@@ -1,5 +1,7 @@
 package com.keytalk.nextgen5.core;
 
+import android.content.Context;
+
 import com.keytalk.nextgen5.core.security.KeyTalkCredentials;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
@@ -27,7 +29,7 @@ public interface KeyTalkUiCallback {
     /**
      * Display an error
      */
-    public void displayError(Throwable t);
+    public void displayError(Throwable t,Context context);
 
     /**
      * Called when the supplied credentials are invalid and the user should wait

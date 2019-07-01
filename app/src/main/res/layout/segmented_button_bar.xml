@@ -9,6 +9,10 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>
     <RadioButton
         android:id="@+id/radio_btn_1"
         style="@style/default_segmented_btn"

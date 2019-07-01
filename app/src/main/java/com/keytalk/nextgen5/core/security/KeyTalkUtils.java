@@ -1,3 +1,11 @@
+/*
+ * Class  :  KeyTalkUtils
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.core.security;
 
 import java.io.UnsupportedEncodingException;
@@ -16,7 +24,6 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
 

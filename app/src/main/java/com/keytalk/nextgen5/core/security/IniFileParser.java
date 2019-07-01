@@ -1,8 +1,12 @@
 package com.keytalk.nextgen5.core.security;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.keytalk.nextgen5.view.util.AppConstants;
+
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -218,10 +222,11 @@ public class IniFileParser {
      * parsing INI InputStream character by character
      *
      * @param
+     * @param context
      * @return Parsed Ini Object
      */
     @SuppressWarnings("unchecked")
-    protected static IniResponseData parseINI(InputStream iniInputStream) {
+    protected static IniResponseData parseINI(InputStream iniInputStream, Context context) {
 
         try {
 
@@ -308,8 +313,21 @@ public class IniFileParser {
                         ArrayList<IniResponseData> value_array = (ArrayList<IniResponseData>) value
                                 .pop();
                         value_array.add(inner_value);
+
                         ((IniResponseData) value.peek()).put(keys.pop(),
                                 value_array);
+                        Object certValidity=inner_value.get("CertValidity");
+                        Object certValidPercent=  inner_value.get("CertValidPercent");
+
+                            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                            SharedPreferences.Editor editor = sp.edit();
+                            String serviceName= inner_value.get("Name").toString();
+                            if(certValidPercent!=null&&certValidPercent!="")
+                            editor.putString(AppConstants.CERT_VALID_PERCENT+serviceName, certValidPercent.toString());//
+                            if(certValidity!=null&&certValidity!="")
+                            editor.putString(AppConstants.CERT_VALIDITY+serviceName, certValidity.toString());
+                            editor.apply();
+
                     } else if (keys.size() > 0)// TODO adding as Type of object
                     // like
                     // Integer,Double....Currently
@@ -402,8 +420,9 @@ public class IniFileParser {
                     start = i + 1;
                 }
                 i++;
-            }
 
+            }
+           /* */
             return (IniResponseData) value.pop();
 
         } catch (IOException e1) {
@@ -420,16 +439,16 @@ public class IniFileParser {
      *            :Path of the INI file on to SD card.
      * @return
      */
-    protected static IniResponseData parseINIFromPath(String iniFilepath) {
+  /*  protected static IniResponseData parseINIFromPath(String iniFilepath) {
         try {
             InputStream iniInputStream = new FileInputStream(iniFilepath);
-            return parseINI(iniInputStream);
+            return parseINI(iniInputStream, );
         } catch (FileNotFoundException e) {
             RCCDFileUtil
                     .e("IniFile Parse parseINIFromPath : FileNotFoundException:"
                             + e.getMessage());
             return null;
         }
-    }
+    }*/
 }
 

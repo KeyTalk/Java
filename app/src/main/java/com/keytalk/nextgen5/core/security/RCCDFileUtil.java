@@ -5,8 +5,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
+
+import com.keytalk.nextgen5.BuildConfig;
+import com.keytalk.nextgen5.util.PreferenceManager;
+import com.keytalk.nextgen5.view.util.AppConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.security.KeyStore;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import static java.util.Calendar.*;
 
 /*
  * Class  :  RCCDFileUtil
@@ -35,13 +46,24 @@ public class RCCDFileUtil {
 
     }
 
-    protected static void e(String message) {
+    public static void e(String message) {
         Log.e(SecurityConstants.TAG_PREFIX,message);
-    }
+    }//String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-    protected static void e(String tag, String message) {
+    public static String getTime()
+    {
+        String formattedDate = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(getInstance().getTime());
+        return formattedDate;
+    }
+    public static void e(String tag, String message) {
         Log.e(tag,message);
     }
+    public static void hideSoftInputFromWindow(Context context)
+    {
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+       // imm.hideSoftInputFromWindow(rccdInputEditText.getWindowToken(), 0);
+    }
+
 
     protected static boolean saveLogcatToFile(Context context) {
         boolean isSucess = false;
@@ -158,8 +180,16 @@ public class RCCDFileUtil {
             boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
             if(isSDPresent) {
                 uri = Uri.parse("file://"+ Environment.getExternalStorageDirectory().getAbsolutePath()+SecurityConstants.KEYTALK_LOGFILE_NAME);
+                if(Build.VERSION.SDK_INT>=24) {
+                    File file = new File(uri.getPath());
+                    uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",file);
+                }
             } else {
                 uri = Uri.parse("file://"+context.getFilesDir().getAbsolutePath()+SecurityConstants.KEYTALK_LOGFILE_NAME);
+                if(Build.VERSION.SDK_INT>=24) {
+                    File file = new File(uri.getPath());
+                    uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",file);
+                }
             }
         } catch (Exception e) {
         } finally {
@@ -232,7 +262,12 @@ public class RCCDFileUtil {
                 //new coder done here
                 outputStream =  DataFileHandler.createOutputFile(rccdFileName, rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR);
                 DataFileHandler.writeToStream(inputStream, outputStream);
-                boolean unzipStatus = FileCompression.unzip(rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR + rccdFileName, rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR);
+                String path=rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR + rccdFileName;
+                String destinationPath=rccdFilePath + SecurityConstants.RCCD_FOLDER_SEPERATOR;
+                PreferenceManager.put(context, AppConstants.PATH,path);
+                PreferenceManager.put(context, AppConstants.DESTINATIONPATH,path);
+                boolean unzipStatus = FileCompression.unzip(path, destinationPath,context,false);
+                //FileInputStream openFileInput = context.openFileInput(rccdFilePath);
                 rccdCommonFile = new File(rccdFilePath, rccdFileName);
                 if (rccdCommonFile.exists()) {
                     rccdCommonFile.delete();
@@ -258,7 +293,7 @@ public class RCCDFileUtil {
                 returnMessage = SecurityConstants.SUCESS_FILE_OPERATIONS;
                 //New code for service match.
                 if(rccdCount > 0 && returnMessage.equals(SecurityConstants.SUCESS_FILE_OPERATIONS)) {
-                    IniResponseData currentRCCDIniResponseData = readCurrentRCCDIniData(rccdFilePath);
+                    IniResponseData currentRCCDIniResponseData = readCurrentRCCDIniData(rccdFilePath,context);
                     if(currentRCCDIniResponseData == null ) {
                         File tempFile = new File(rccdFilePath);
                         if (tempFile.isDirectory()) {
@@ -351,7 +386,7 @@ public class RCCDFileUtil {
     /*
  * Reading current RCCD data
  */
-    private IniResponseData readCurrentRCCDIniData(final String rccdFilePath) {
+    private IniResponseData readCurrentRCCDIniData(final String rccdFilePath, Context context) {
         IniResponseData currentRCCDIniResponseData = null;
         FileInputStream fileInputStream = null;
         try {
@@ -369,7 +404,7 @@ public class RCCDFileUtil {
                 return currentRCCDIniResponseData;
             }
             fileInputStream = new FileInputStream(rccdCommonFile);
-            currentRCCDIniResponseData = IniFileParser.parseINI(fileInputStream);
+            currentRCCDIniResponseData = IniFileParser.parseINI(fileInputStream,context );
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -450,7 +485,7 @@ public class RCCDFileUtil {
             for (File childFile : rccdCommonFile.listFiles()) {
                 String childfileName = childFile.getName();
                 if(!tempCurrentRCCDFolderName.equals(childfileName)) {
-                    IniResponseData iniResponseData = readCurrentRCCDIniData(rccdCommonPath +SecurityConstants.RCCD_FOLDER_SEPERATOR + childfileName );
+                    IniResponseData iniResponseData = readCurrentRCCDIniData(rccdCommonPath +SecurityConstants.RCCD_FOLDER_SEPERATOR + childfileName, context);
                     if (iniResponseData != null) {
                         allIniResponseData.add(iniResponseData);
                         iniFolderName.add(childfileName);
@@ -496,7 +531,7 @@ public class RCCDFileUtil {
                 return iniResponseData;
             }
             fileInputStream = new FileInputStream(rccdCommonFile);
-            iniResponseData = IniFileParser.parseINI(fileInputStream);
+            iniResponseData = IniFileParser.parseINI(fileInputStream, context);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -531,18 +566,27 @@ public class RCCDFileUtil {
         }
 
     }
+    CertificateInfo cert;
 
     protected boolean removeAllCertificates(Context context) {
+
         try {
             SharedPreferences mSettings = context.getSharedPreferences(SecurityConstants.KMSettingsPrefFileName, 0);
             SharedPreferences.Editor editor = mSettings.edit();
             editor.clear();
             editor.commit();
-
+            char[] test={12345};
             removeAllNativeKeyStoreInstallationStatus(context);
 
             String rccdPath = context.getFilesDir() + SecurityConstants.RCCD_FOLDER_SEPERATOR+ SecurityConstants.RCCD_FILE_INTERNAL_CERT_STORAGE_FOLDER;
             File rccdFolderPath = new File(rccdPath);
+
+            //CertificateInfo cert;
+            KeyStore keystore = cert.getKeyStore();
+            OutputStream writeStream = new FileOutputStream(rccdPath);
+            keystore.store(writeStream, test);
+            writeStream.close();
+
             deleteRecursive(rccdFolderPath);
             return true;
         } catch (Exception e) {
@@ -596,7 +640,7 @@ public class RCCDFileUtil {
                         FileInputStream fileInputStream = null;
                         try {
                             fileInputStream  = new FileInputStream(rccdContent.listFiles(iniFilter)[0]);
-                            IniResponseData iniResponseData = IniFileParser.parseINI(fileInputStream);
+                            IniResponseData iniResponseData = IniFileParser.parseINI(fileInputStream, context);
                             rccdFileData.setServiceData(iniResponseData);
                         } catch (IOException e) {
                             e("RCCDFileUtility","Reading all rccd file IOException : "+e);
@@ -656,7 +700,7 @@ public class RCCDFileUtil {
             File file = new File(fullPath);
             if (file.exists()) {
                 inputstream=new FileInputStream(file);
-                IniResponseData iniData=IniFileParser.parseINI(inputstream);
+                IniResponseData iniData=IniFileParser.parseINI(inputstream, context);
                 iniData.setServerUri(updatedURL);
                 file.delete();
                 file.createNewFile();
@@ -744,7 +788,7 @@ public class RCCDFileUtil {
             File file = new File(fullPath);
             if (file.exists()) {
                 inputstream=new FileInputStream(file);
-                IniResponseData iniData=IniFileParser.parseINI(inputstream);
+                IniResponseData iniData=IniFileParser.parseINI(inputstream, context);
                 iniData.setServiceUri(serviceCount,updatedURL);
                 file.delete();
                 file.createNewFile();
@@ -788,7 +832,7 @@ public class RCCDFileUtil {
             File file = new File(fullPath);
             if (file.exists()) {
                 inputstream=new FileInputStream(file);
-                IniResponseData iniData=IniFileParser.parseINI(inputstream);
+                IniResponseData iniData=IniFileParser.parseINI(inputstream,context);
                 boolean isSucess = iniData.addUserName(serviceCount,updatedUserName);
                 if(isSucess) {
                     file.delete();

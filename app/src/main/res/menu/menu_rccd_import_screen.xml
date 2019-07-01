@@ -9,6 +9,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:labelFor="@string/import_rccd"
     tools:context=".view.activities.RCCDImportScreenActivity">
 
     <item
@@ -16,4 +17,5 @@
         android:title="@string/services"
         android:icon="@drawable/ic_view_list_white_24dp"
         app:showAsAction="always" />
+
 </menu>

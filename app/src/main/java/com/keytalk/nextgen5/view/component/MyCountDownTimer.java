@@ -25,6 +25,7 @@ public class MyCountDownTimer extends CountDownTimer
     private boolean isrunning=false;
     private LinearLayout countDownWidgett=null;
     private TextView countDownText=null;
+    private TextView countDownMsg=null;
     private TimerCallBack timerCallBack;
     private long millisUntilFinished=0;
 
@@ -33,6 +34,7 @@ public class MyCountDownTimer extends CountDownTimer
         super(startTime, interval);
         this.countDownWidgett=countDownWidgett;
         this.countDownText=(TextView)countDownWidgett.findViewById(R.id.countdown_text);
+        this.countDownMsg=(TextView)countDownWidgett.findViewById(R.id.countdown_msg);
         this.starttime=startTime;
         this.timerCallBack = tryAgain;
         millisUntilFinished=startTime;
@@ -54,6 +56,7 @@ public class MyCountDownTimer extends CountDownTimer
 
     public void startCountDown()
     {
+        countDownMsg.setText(R.string.countdown_msg);
         isrunning=true;
         countDownWidgett.setVisibility(View.VISIBLE);
         countDownWidgett.setOnTouchListener(ontouchlistener);

@@ -110,9 +110,14 @@ public final class AppConstants {
 
     public static final String SUCESS = "SUCESS";
     public static final String FAILURE = "FAILURE";
+    public static final String REQUEST_KEY_LIST = "REQUEST_KEY_LIST";
+    public static final String REQUEST_LIST = "REQUEST_LIST";
+    public static final String CERT_VALIDITY = "CERT_VALIDITY";
+    public static final String CERT_VALID_PERCENT = "CERT_VALID_PERCENT";
 
-
-
+    public static final String PATH = "PATH";
+    public static final String DESTINATIONPATH = "DESTINATIONPATH";
+    public static final String COOKIE = "COOKIE";
 }
 
 

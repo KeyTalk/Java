@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Class  :  validation_messages.xml
+  ~ Description :
+  ~
+  ~ Created By Jobin Mathew on 2019
+  ~ All rights reserved @ keytalk.com
+  -->
+<resources>
+
+    <string name="alert_dialog_title">Avertissement</string>
+    <string name="no_network_message">Vous n\'êtes pas connecté à Internet. Veuillez vérifier vos paramètres ou réessayer plus tard.</string>
+    <string name="no_values_entered">Veuillez entrer une URL valide que vous souhaitez importer.</string>
+    <string name="empty_request_response">Désolé, votre recherche n\'a trouvé aucun résultat. \n Veuillez réessayer.</string>
+    <string name="invalid_rccd_download_response">Le fichier RCCD téléchargé n\'est pas valide. Veuillez vérifier votre URL saisie correctement.</string>
+    <string name="invalid_rccd_zip_download_response">La décompression du fichier RCCD téléchargé a échoué. Veuillez contacter votre administrateur.</string>
+    <string name="invalid_rccd_ca_download_response">Erreur du système de fichiers. Impossible de traiter le fichier RCCD téléchargé, veuillez contacter votre administrateur.</string>
+    <string name="invalid_rccd_checksum_response">Désolé, le fichier RCCD téléchargé ne contient pas de certificat valide. Veuillez réessayer.</string>
+    <string name="invalid_rccd_download_email">Le fichier RCCD téléchargé n\'est pas valide. Veuillez réessayer.</string>
+    <string name="sucess_rccd_download" formatted ="false">Le fournisseur %s (services %s) a été importé du fichier RCCD</string>
+    <string name="rccdscreen_reset_message">Cela supprime tous les fournisseurs, services et certificats associés précédemment importés.</string>
+    <string name="rccdscreen_reset_session_message">Cela supprime tous les certificats précédemment importés.</string>
+    <string name="cert_received_dialog_msg_for_below_ics">Le certificat reçu pour le service %s sera chargé sur le serveur par le navigateur.</string>
+    <string name="cert_received_dialog_msg_for_ics">Certificat reçu pour% s Service et KeyTalk aimeraient installer le certificat. Le système peut vous demander d\'activer le verrouillage de l\'écran s\'il n'est pas activé. Veuillez utiliser 12345 comme mot de passe d\'installation.</string>
+    <string name="cert_installed_dialog_msg">Le certificat pour le service %s est installé avec succès et vous pouvez accéder au serveur via le navigateur.</string>
+    <string name="cert_not_installed_dialog_msg">Le certificat pour l\'installation du service %s a échoué et vous ne pouvez pas accéder au serveur via le navigateur.</string>
+    <string name="password_expire_option_more" formatted ="false">Votre mot de passe expirera dans %s jours. Voulez-vous réinitialiser le mot de passe?</string>
+    <string name="password_expire_option" formatted ="false">Votre mot de passe expirera dans quelques heures. Voulez-vous réinitialiser le mot de passe?</string>
+    <string name="cert_dialog_failed_again_msgs">Le certificat pour l\'installation du service %s a échoué et vous ne pouvez pas accéder au serveur via le navigateur. Voulez-vous réinstaller le certificat?</string>
+    <string name="reinstall_cert_received_dialog_msg_for_ics">Le système peut vous demander d\'activer le verrouillage de l\'écran s\'il n\'est pas activé. Veuillez utiliser 12345 comme mot de passe d\'installation.</string>
+    <string name="reinstall_cert">Certificat trouvé pour le service %s, KeyTalk souhaite installer le certificat. Le système peut vous demander d\'activer le verrouillage de l\'écran s'il n\'est pas activé. Veuillez utiliser 12345 comme mot de passe d\'installation.</string>
+    <string name="no_valid_url">Certificat valide disponible mais une URL est manquante. Veuillez contacter votre administrateur pour l\'URL cible. </string>
+    <string name="report_to_admin">Souhaitez-vous signaler un problème à votre administrateur?</string>
+    <string name="certificate_access_data">Ce certificat peut accéder à vos données, voulez-vous continuer?</string>
+    <string name="Continue">continuer</string>
+    <string name="validating">En validant&#8230;</string>
+    <string name="provider">Fournisseur </string>
+    <string name="service_imported">a été importé du fichier RCCD</string>
+    <string name="resetting">Réinitialisation&#8230;</string>
+    <string name="authenticating">Authentifier&#8230;</string>
+    <string name="request_try_again">Nous ne sommes pas en mesure de traiter votre demande. Veuillez réessayer.</string>
+    <string name="password_expire_string">Votre mot de passe expirera dans</string>
+    <string name="days_reset_password">jours. Voulez-vous réinitialiser le mot de passe?</string>
+    <string name="sorry_no_server">Désolé, il n\'y a pas de service actif!</string>
+    <string name="server_message">Message du serveur</string>
+    <string name="server_message_not_available">Pardon! Le message du serveur n\'est plus disponible.</string>
+    <string name="update_and_ssl_unavailable">Impossible de mettre à jour vos paramètres de sécurité et la sécurité SSL peut ne pas être disponible.</string>
+    <string name="sorry_please_try_after">Désolé, nous ne sommes pas en mesure de traiter votre demande. S\'il vous plaît essayer après un certain temps!</string>
+    <string name="sorry_no_publickey_get_latest_RCCD_file_try_again">Désolé, impossible de trouver la clé publique. Veuillez récupérer le dernier fichier RCCD et réessayer!</string>
+    <string name="no_cert_found_service">Aucun certificat trouvé pour le service </string>
+    <string name="unknown_error_try_again">Erreur inconnue. Veuillez réessayer plus tard </string>
+
+</resources>

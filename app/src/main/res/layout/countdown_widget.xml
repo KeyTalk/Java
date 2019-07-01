@@ -16,6 +16,17 @@
     android:orientation="vertical"
     android:visibility="gone" >
 
+
+    <TextView
+        android:id="@+id/countdown_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        android:text="@string/countdown_default_text"
+        android:textColor="@color/countdownwidget_textcolor"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/countdown_text"
         android:layout_width="wrap_content"

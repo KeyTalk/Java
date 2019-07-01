@@ -6,7 +6,34 @@
   ~ All rights reserved @ keytalk.com
   -->
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical">
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>
+   <!-- <ProgressBar
+        android:id="@+id/spinner_progressbar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:elevation="7dp" />-->
+<TextView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:text="@string/service_title"
 
+    style="@style/screen_text"
+
+    android:layout_margin="10dp"/>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +42,6 @@
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
     tools:context="com.keytalk.nextgen5.view.activities.ServiceListingActivity">
-
 
     <LinearLayout
         android:id="@+id/rccd_layout"
@@ -52,5 +78,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
     </LinearLayout>
+</LinearLayout>
 
 </LinearLayout>

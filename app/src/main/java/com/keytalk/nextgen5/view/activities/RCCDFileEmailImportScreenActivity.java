@@ -49,12 +49,14 @@ public class RCCDFileEmailImportScreenActivity extends AppCompatActivity {
                     if (intentScheme.compareTo(ContentResolver.SCHEME_CONTENT) == 0) {
                         KeyTalkCommunicationManager.addToLogFile("RCCDFileEmailImportScreenActivity","RCCD from Email Attachment ");
                         Intent emailAttachmentIntent = new Intent(RCCDFileEmailImportScreenActivity.this,RCCDImportScreenActivity.class);
+                        emailAttachmentIntent.putExtra("REFRESH",true);
                         emailAttachmentIntent.putExtra(AppConstants.IMPORTED_RCCD_FILE_FROM_EMAIL, inputIntent.getData().toString());
                         RCCDFileEmailImportScreenActivity.this.finish();
                         startActivity(emailAttachmentIntent);
                     } else if (intentScheme.compareTo(ContentResolver.SCHEME_FILE) == 0) {
                         KeyTalkCommunicationManager.addToLogFile("RCCDFileEmailImportScreenActivity","RCCD from local memory");
                         Intent emailAttachmentIntent = new Intent(RCCDFileEmailImportScreenActivity.this,RCCDImportScreenActivity.class);
+                        emailAttachmentIntent.putExtra("REFRESH",true);
                         emailAttachmentIntent.putExtra(AppConstants.IMPORTED_RCCD_FILE_FROM_MEMORY, inputIntent.getData().toString());
                         RCCDFileEmailImportScreenActivity.this.finish();
                         startActivity(emailAttachmentIntent);

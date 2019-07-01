@@ -14,8 +14,8 @@ android {
         applicationId "com.keytalk.nextgen5"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 10007
-        versionName "5.3.3"
+        versionCode 10009
+        versionName "5.5.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // Enabling multidex support.
         multiDexEnabled true
@@ -38,6 +38,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
     compile 'com.google.android.gms:play-services-auth:11.0.4'
+    compile 'com.google.code.gson:gson:2.8.5'
     compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
 }

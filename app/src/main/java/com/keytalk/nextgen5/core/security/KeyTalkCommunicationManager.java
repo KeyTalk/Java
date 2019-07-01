@@ -1,3 +1,11 @@
+/*
+ * Class  :  KeyTalkCommunicationManager
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.core.security;
 
 import android.app.Activity;
@@ -6,11 +14,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Message;
 import android.security.KeyChain;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.keytalk.nextgen5.R;
 import com.keytalk.nextgen5.core.AuthenticationCallBack;
 import com.keytalk.nextgen5.core.AuthenticationCertificateCallBack;
 import com.keytalk.nextgen5.core.RCCDDownloadCallBack;
@@ -42,6 +50,7 @@ public class KeyTalkCommunicationManager extends CommunicationViewHelper {
     private AuthenticationCallBack authenticationCallBack = null;
     private static AuthenticationCertificateCallBack authenticationCertificateCallBack = null;
     private static ResetPasswordCallBack resetPasswordCallBack = null;
+    Context context;
 
 
     public KeyTalkCommunicationManager(Object requestedInstance) {
@@ -558,7 +567,7 @@ public class KeyTalkCommunicationManager extends CommunicationViewHelper {
                     else if (responseData.getMessageType().equals(ResponseType.AUTH_REQUEST_DATA_NOT_AVAILABLE)) {
                         //Error - Request Data not avialable
                         if (authenticationCallBack != null) {
-                            authenticationCallBack.displayError("Sorry, We are not able to process your request. Please try after some time!");
+                            authenticationCallBack.displayError( context.getString(R.string.sorry_please_try_after));
                         } else {
                             // error
                             //should dismiss dialog
@@ -566,7 +575,7 @@ public class KeyTalkCommunicationManager extends CommunicationViewHelper {
                     } else if (responseData.getMessageType().equals(ResponseType.AUTH_REQUEST_PUBLIC_KEY_NOT_AVAILABLE)) {
                         //Error - public key not avialabe
                         if (authenticationCallBack != null) {
-                            authenticationCallBack.displayError("Sorry, Not able to find the Public Key. Please get latest RCCD file and try!");
+                            authenticationCallBack.displayError(context.getString(R.string.sorry_no_publickey_get_latest_RCCD_file_try_again));
                         } else {
                             // error
                             //should dismiss dialog

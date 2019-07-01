@@ -13,22 +13,43 @@
     <string name="no_values_entered">Please enter a valid URL that you would like to import.</string>
     <string name="empty_request_response">Sorry, your search found no result.\nPlease try again.</string>
     <string name="invalid_rccd_download_response">Downloaded RCCD file is invalid. Please check your entered URL correctly.</string>
-    <string name="invalid_rccd_zip_download_response">Unzipping of downloaded rccd file is failed. Please contact your admin.</string>
-    <string name="invalid_rccd_ca_download_response">File system error. Unable to process the downloaded rccd file and please contact your admin.</string>
-    <string name="invalid_rccd_checksum_response">Sorry, downloaded RCCD file do not have valid certificate. Please try again.</string>
+    <string name="invalid_rccd_zip_download_response">Unzipping of downloaded RCCD file failed. Please contact your administrator.</string>
+    <string name="invalid_rccd_ca_download_response">File system error. Unable to process the downloaded RCCD file, please contact your administrator.</string>
+    <string name="invalid_rccd_checksum_response">Sorry, downloaded RCCD file does not have a valid certificate. Please try again.</string>
     <string name="invalid_rccd_download_email">Downloaded RCCD file is invalid. Please try again.</string>
     <string name="sucess_rccd_download" formatted ="false">Provider %s (%s Services) was imported from the RCCD file</string>
     <string name="rccdscreen_reset_message">This removes all previously imported providers,services and related certificates.</string>
     <string name="rccdscreen_reset_session_message">This removes all previously imported certificates.</string>
-    <string name="cert_received_dialog_msg_for_below_ics">Received certificate for %s Service and embedded browser will load the server</string>
+    <string name="cert_received_dialog_msg_for_below_ics">Received certificate for %s Service will be loaded onto the server by the browser.</string>
     <string name="cert_received_dialog_msg_for_ics">Received certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
-    <string name="cert_installed_dialog_msg">Certificate for %s Service successfully installed in System and you can access the server through embedded or native browser.</string>
-    <string name="cert_not_installed_dialog_msg">Certificate for %s Service installation failed and you can access the server through embedded browser.</string>
-    <string name="password_expire_option_more" formatted ="false">Your password will expire within %s days. Do you want to reset the password</string>
-    <string name="password_expire_option" formatted ="false">Your password will expire with in few hours. Do you want to reset the password</string>
-    <string name="cert_dialog_failed_again_msgs">Certificate for %s Service installation failed and you can not access the server through native browser. Do you want to reinstall the certificate.</string>
+    <string name="cert_installed_dialog_msg">Certificate for %s Service is successfully installed and you can access the server through the browser.</string>
+    <string name="cert_not_installed_dialog_msg">Certificate for %s Service installation failed and you can not access the server through the browser.</string>
+    <string name="password_expire_option_more" formatted ="false">Your password will expire within %s days. Do you want to reset the password?</string>
+    <string name="password_expire_option" formatted ="false">Your password will expire within few hours. Do you want to reset the password?</string>
+    <string name="cert_dialog_failed_again_msgs">Certificate for %s Service installation failed and you can not access the server through the browser. Do you want to reinstall the certificate?</string>
     <string name="reinstall_cert_received_dialog_msg_for_ics">System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
     <string name="reinstall_cert">Found certificate for %s Service and KeyTalk would like to install the certificate. System may ask you to enable screen lock, if not enabled. Please use 12345 as installation password.</string>
-    <string name="no_valid_url">Valid certificate available, but missed target url which certificate support. Please contact your administrator for target URL. </string>
+    <string name="no_valid_url">Valid certificate available but a URL is missing. Please contact your administrator for target URL. </string>
     <string name="report_to_admin">Do you want to report any issues to your administrator?</string>
+    <string name="certificate_access_data">This certificate may access your data, do you want to continue?</string>
+    <string name="Continue">Continue</string>
+    <string name="validating">Validating&#8230;</string>
+    <string name="provider">Provider </string>
+    <string name="service_imported">Services) was imported from the RCCD file</string>
+    <string name="resetting">Resetting&#8230;</string>
+    <string name="authenticating">Authenticating&#8230;</string>
+    <string name="request_try_again">We are not able to process your request. Please try again.</string>
+    <string name="password_expire_string">Your password will expire within</string>
+    <string name="days_reset_password">days. Do you want to reset the password</string>
+    <string name="sorry_no_server">Sorry, there is no service active!</string>
+    <string name="server_message">Server message</string>
+    <string name="server_message_not_available">Sorry! Server message is no longer available.</string>
+    <string name="update_and_ssl_unavailable">Unable to update your security settings and SSL security may not be available.</string>
+    <string name="sorry_please_try_after">Sorry, we are not able to process your request. Please try after some time!</string>
+    <string name="sorry_no_publickey_get_latest_RCCD_file_try_again">Sorry, not able to find the public key. Please get the latest RCCD file and try again!</string>
+    <string name="no_cert_found_service">No certificate found for service: </string>
+    <string name="unknown_error_try_again">Unknown error. Please try again later </string>
+
+
+
 </resources>

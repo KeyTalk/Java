@@ -1,18 +1,25 @@
 package com.keytalk.nextgen5.view.component;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.keytalk.nextgen5.R;
+import com.keytalk.nextgen5.core.security.GetCAFromHttps;
 import com.keytalk.nextgen5.core.security.IniResponseData;
 import com.keytalk.nextgen5.core.security.RCCDFileData;
 import com.keytalk.nextgen5.view.util.AppConstants;
@@ -30,11 +37,14 @@ import java.util.ArrayList;
 public class ProviderServicesAdaptor extends BaseExpandableListAdapter {
     private Context _context;
     private ArrayList<RCCDFileData> providerServiceList;
+    ProgressDialog progressDialog;
     TextView urlChild;
+    IniResponseData providerData;
 
-    public ProviderServicesAdaptor(Context context,ArrayList<RCCDFileData> providerServiceList) {
+    public ProviderServicesAdaptor(Context context, ArrayList<RCCDFileData> providerServiceList, ProgressBar mProgressBar) {
         this._context = context;
         this.providerServiceList = providerServiceList;
+       // progressBar=mProgressBar;
     }
 
     @Override
@@ -69,11 +79,14 @@ public class ProviderServicesAdaptor extends BaseExpandableListAdapter {
             borderlayout.setLayoutParams(params);
             //add code here
             ImageView keytalk_icon = (ImageView) convertView.findViewById(R.id.service_icon);
+            Button trustButton = convertView.findViewById(R.id.trustCertificate);
+            trustButton.setFocusable(false);
+            trustButton.setVisibility(View.GONE);
             keytalk_icon.setVisibility(View.GONE);
             urlChild = (TextView) convertView.findViewById(R.id.keytalk_listitem);
             urlChild.setGravity(Gravity.CENTER);
             IniResponseData iniResponseData = providerServiceList.get(groupPosition).getServiceData();
-            IniResponseData providerData = iniResponseData.getIniArrayValue(AppConstants.INI_FILE_PROVIDER_TEXT).get(0);
+             providerData = iniResponseData.getIniArrayValue(AppConstants.INI_FILE_PROVIDER_TEXT).get(0);
             urlChild.setText(providerData.getStringValue("Server"));
             return convertView;
         } else {
@@ -99,6 +112,17 @@ public class ProviderServicesAdaptor extends BaseExpandableListAdapter {
             TextView txtListChild = (TextView) convertView.findViewById(R.id.keytalk_listitem);
             txtListChild.setText(childText.getStringValue(AppConstants.INI_FILE_SERVICE_NAME_TEXT));
             txtListChild.setGravity(Gravity.LEFT);
+            Button trustButton = convertView.findViewById(R.id.trustCertificate);
+            trustButton.setFocusable(false);
+            trustButton.setVisibility(View.VISIBLE);
+            trustButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // Log.e("","");
+                    showAlert();
+
+                }
+            });
             ImageView keytalk_icon = (ImageView) convertView.findViewById(R.id.service_icon);
             keytalk_icon.setImageBitmap(providerServiceList.get(groupPosition).getProviderIcon());
             keytalk_icon.setVisibility(View.VISIBLE);
@@ -106,6 +130,32 @@ public class ProviderServicesAdaptor extends BaseExpandableListAdapter {
         }
 
     }
+    private void showAlert() {
+        try {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+            builder.setTitle(_context.getString(R.string.authorise_title));
+            builder.setMessage(_context.getString(R.string.authorise_msg));
+            builder.setPositiveButton(_context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    GetCAFromHttps getCAFromHttps = new GetCAFromHttps().execute(_context,progressDialog,providerData);
+                    getCAFromHttps.execute("");
+                }
+            });
+
+            builder.setNegativeButton(_context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+        } catch (Exception e) {
+
+        }
+    }
+
 
     @Override
     public int getChildrenCount(int groupPosition) {
