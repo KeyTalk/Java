@@ -107,14 +107,7 @@ public class ServiceListingActivity extends BaseActivity implements ExpandableLi
         toolbar.setTitle(R.string.import_rccd);
         TextView header = (TextView)findViewById(R.id.header_string);
         header.setText(R.string.services);
-        header.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
-            @Override
-            public void onClick(View v) {
 
-            authenticate();
-            }
-        });
         mProgressBar = (ProgressBar) findViewById(R.id.spinner_progressbar);
         findViewById(R.id.rccd_layout).setVisibility(View.VISIBLE);
         expListView = (ExpandableListView) findViewById(R.id.servicelistscreen_listview);
@@ -132,22 +125,7 @@ public class ServiceListingActivity extends BaseActivity implements ExpandableLi
         //Utilities.checkLanguage(getApplicationContext());
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
-    public  void authenticate() {
-       try {
-           AccountManager mAccountManager = AccountManager.get(context);
-           Account[] accounts = mAccountManager.getAccounts();
-           Account test=accounts[0];
-//           mAccountManager.removeAccountExplicitly(accounts[1]);
-//           mAccountManager.removeAccountExplicitly(accounts[2]);
-           Account account = new Account("Demo2", "smime.keytalk.com");
-           boolean success = mAccountManager.addAccountExplicitly(account, "password", null);
-           if (success) {
-           }
-       }catch (Exception e)
-       {
-           Log.e("",e.getMessage());
-       }
-    }
+
     // account.
     //  mAccountManager.addAccountExplicitly(account, accountPassword, null);
 
@@ -251,7 +229,7 @@ public class ServiceListingActivity extends BaseActivity implements ExpandableLi
     }
 
     private void getPermissions() {
-        String[] permissionArray = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.GET_ACCOUNTS,Manifest.permission.ACCOUNT_MANAGER};
+        String[] permissionArray = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         checkPermissions(permissionArray);
     }
 
@@ -260,9 +238,9 @@ public class ServiceListingActivity extends BaseActivity implements ExpandableLi
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.GET_ACCOUNTS,Manifest.permission.ACCOUNT_MANAGER}, REQUEST_READ_EXTERNAL_STORAGE_STATE);
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE_STATE);
                     } else {
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.GET_ACCOUNTS,Manifest.permission.ACCOUNT_MANAGER}, REQUEST_READ_EXTERNAL_STORAGE_STATE);
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE_STATE);
                     }
                     return false;
                 }
