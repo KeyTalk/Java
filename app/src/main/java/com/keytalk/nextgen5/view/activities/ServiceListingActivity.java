@@ -1,7 +1,16 @@
+/*
+ * Class  :  ServiceListingActivity
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.activities;
 
 import android.Manifest;
-import android.app.Activity;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,10 +21,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
+import android.os.StrictMode;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,8 +34,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,22 +46,23 @@ import com.google.android.gms.security.ProviderInstaller;
 import com.keytalk.nextgen5.R;
 import com.keytalk.nextgen5.application.KeyTalkApplication;
 import com.keytalk.nextgen5.core.AuthenticationCallBack;
+import com.keytalk.nextgen5.core.RCCDDownloadCallBack;
 import com.keytalk.nextgen5.core.security.IniResponseData;
 import com.keytalk.nextgen5.core.security.KeyTalkCommunicationManager;
 import com.keytalk.nextgen5.core.security.RCCDFileData;
-import com.keytalk.nextgen5.core.security.RCCDFileUtil;
 import com.keytalk.nextgen5.util.Keys;
 import com.keytalk.nextgen5.util.NetworkUtil;
 import com.keytalk.nextgen5.util.PreferenceManager;
+import com.keytalk.nextgen5.view.component.AlertDialogFragment;
 import com.keytalk.nextgen5.view.component.ErrorDialog;
 import com.keytalk.nextgen5.view.component.ProviderServicesAdaptor;
 import com.keytalk.nextgen5.view.util.AppConstants;
 
+import java.security.cert.LDAPCertStoreParameters;
 import java.util.ArrayList;
 
 import static com.keytalk.nextgen5.view.util.AppConstants.DIALOG_PERMISSION_DENIED_MSG;
 import static com.keytalk.nextgen5.view.util.AppConstants.REQUEST_READ_EXTERNAL_STORAGE_STATE;
-import static com.keytalk.nextgen5.view.util.AppConstants.REQUEST_READ_PHONE_STATE;
 
 /*
  * Class  :  ServiceListingActivity
@@ -57,24 +71,26 @@ import static com.keytalk.nextgen5.view.util.AppConstants.REQUEST_READ_PHONE_STA
  * Created by : KeyTalk IT Security BV on 2017
  * All rights reserved @ keytalk.com
  */
-public class ServiceListingActivity extends AppCompatActivity implements ExpandableListView.OnChildClickListener,
-        AuthenticationCallBack, ProviderInstaller.ProviderInstallListener {
-
+public class ServiceListingActivity extends BaseActivity implements ExpandableListView.OnChildClickListener,
+        AuthenticationCallBack, ProviderInstaller.ProviderInstallListener, RCCDDownloadCallBack {
+    private String alertType = AppConstants.ALERT_DIALOG_TYPE_UNKNOWN;
     private ProviderServicesAdaptor providerServiceAdaptor;
     private ExpandableListView expListView;
     private ArrayList<RCCDFileData> providerServiceList;
     private LayoutInflater layoutInflater;
     private View dialogView;
+    ProgressBar mProgressBar;
     private ImageView dialogIcon;
     private TextView dialogTxtMessage;
     private String errorMessage = null;
-
     private boolean isShowingAlertDialog=false;
     private int currentAlertDialogID=-1;
     private AlertDialog activityAlertDialog;
     private boolean isShowingDialog = false;
     private ProgressDialog dialog;
-
+    private Context context;
+    private final String TAG = "ServiceListingActivity";
+    public static String requestURL;
     private boolean installtionMessage = false;
     private static final int ERROR_DIALOG_REQUEST_CODE = 1;
     private boolean mRetryProviderInstall;
@@ -83,12 +99,21 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_service_listing);
+        context=getBaseContext();
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.import_rccd);
+        TextView header = (TextView)findViewById(R.id.header_string);
+        header.setText(R.string.services);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.spinner_progressbar);
         findViewById(R.id.rccd_layout).setVisibility(View.VISIBLE);
         expListView = (ExpandableListView) findViewById(R.id.servicelistscreen_listview);
         //Getting all rccd file contents
         providerServiceList = KeyTalkCommunicationManager.getAllRCCDFileContents(this);
-        providerServiceAdaptor = new ProviderServicesAdaptor(this,providerServiceList);
+        providerServiceAdaptor = new ProviderServicesAdaptor(this,providerServiceList,mProgressBar);
         expListView.setAdapter(providerServiceAdaptor);
         expListView.setOnChildClickListener(this);
         for (int i = 0; i < providerServiceList.size(); i++) {
@@ -97,8 +122,102 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         ProviderInstaller.installIfNeededAsync(this, this);
         if (Build.VERSION.SDK_INT >= 23)
             getPermissions();
+        //Utilities.checkLanguage(getApplicationContext());
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 
+    // account.
+    //  mAccountManager.addAccountExplicitly(account, accountPassword, null);
+
+    //        LDAPConnection connection = null;
+//        try {
+//            connection = ldapServer.getConnection();
+//            if (connection != null) {
+//                RootDSE s = connection.getRootDSE();
+//                String[] baseDNs = null;
+//                if (s != null) {
+//                    baseDNs = s.getNamingContextDNs();
+//                }
+//
+//                sendResult(baseDNs, true, handler, context, null);
+//                return true;
+//            }
+//        } catch (LDAPException e) {
+//            Log.e(TAG, "Error authenticating", e);
+//            sendResult(null, false, handler, context, e.getMessage());
+//            return false;
+//        } finally {
+//            if (connection != null) {
+//                connection.close();
+//            }
+//        }
+//        return false;
+    public void saveLocalCA(){
+        String path= PreferenceManager.getString(context,AppConstants.PATH);
+        String destinationPath=PreferenceManager.getString(context,AppConstants.DESTINATIONPATH);
+        validateRequestURL();
+      //  FileCompression.unzip(path,destinationPath,context,true);
+    }
+    private void validateRequestURL() {
+        if (TextUtils.isEmpty(requestURL) || requestURL == null) {
+            alertType = AppConstants.ALERT_DIALOG_TYPE_EMPTY_URL;
+            DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title), getString(R.string.no_values_entered), getString(R.string.OK_text), null);
+            alertDialog.show(getSupportFragmentManager(), "dialog");
+        } else {
+			/*Pattern pattern = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?(.rccd){1}");
+			Matcher matcher = pattern.matcher(rccdInputEditText.getText().toString());
+		    if(matcher.matches()) {*/
+            if(NetworkUtil.getInstance(this).isNetworkAvailable(true)) {
+                String providerURL = requestURL.trim();
+                if(providerURL.length() < 3 /*|| !providerURL.substring(providerURL.length() - 5).equals(".rccd")*/) {
+                    alertType = AppConstants.ALERT_DIALOG_TYPE_EMPTY_URL;
+                    DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title), getString(R.string.no_values_entered), getString(R.string.OK_text), null);
+                    alertDialog.show(getSupportFragmentManager(), "dialog");
+                } else {
+                    boolean isSecure = false;
+                    if(providerURL.startsWith("https://")) {
+                        isSecure = true;
+                    }
+                    providerURL = (providerURL.replace("http://", "")).replace("https://", "");
+                    if(providerURL.split("/").length <= 1) {
+                        alertType = AppConstants.ALERT_DIALOG_TYPE_EMPTY_URL;
+                        DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title), getString(R.string.no_values_entered), getString(R.string.OK_text), null);
+                        alertDialog.show(getSupportFragmentManager(), "dialog");
+                    } else {
+                        if(!providerURL.substring(providerURL.length() - 5).equals(".rccd")) {
+                            if(providerURL.split("\\.").length > 2) {
+                                if(providerURL.substring(providerURL.lastIndexOf(".") + 1) == null || providerURL.substring(providerURL.lastIndexOf(".") + 1).isEmpty()) {
+                                    providerURL = providerURL + "rccd";
+                                } else {
+                                    providerURL = providerURL+ ".rccd"; ;
+                                }
+                            } else {
+                                if(providerURL.substring(providerURL.lastIndexOf(".") + 1) == null || providerURL.substring(providerURL.lastIndexOf(".") + 1).isEmpty()) {
+                                    providerURL = providerURL + "rccd";
+                                } else {
+                                    providerURL = providerURL + ".rccd";
+                                }
+                            }
+                        }
+                        if(isSecure) {
+                            providerURL = "https://"+providerURL;
+                        } else {
+                            providerURL = "http://"+providerURL;
+                        }
+                        KeyTalkCommunicationManager.addToLogFile("","RCCD request initiated :"+providerURL);
+                      //  mProgressBar.setVisibility(View.VISIBLE);
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        KeyTalkCommunicationManager keyTalkCommunicationManager = new KeyTalkCommunicationManager(this);
+                        keyTalkCommunicationManager.getRCCDFileFromURL(KeyTalkApplication.getCommunicationLooper(), providerURL);
+                    }
+                }
+            } else {
+                KeyTalkCommunicationManager.addToLogFile(TAG,"Tapped ok button without valid network connection");
+                DialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.import_rccd_alert_title), getString(R.string.no_network_message), getString(R.string.OK_text), null);
+                alertDialog.show(getSupportFragmentManager(), "dialog");
+            }
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -110,7 +229,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
     }
 
     private void getPermissions() {
-        String[] permissionArray = { Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] permissionArray = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         checkPermissions(permissionArray);
     }
 
@@ -165,10 +284,45 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
     public void onConfigurationChanged(Configuration newConfig)  {
         super.onConfigurationChanged(newConfig);
     }
+    private void showAlert() {
+        try {
 
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.authorise_title));
+
+
+            builder.setMessage(getString(R.string.authorise_msg));
+
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    saveLocalCA();
+                   // hideSoftInputFromWindow();
+                  //  validateRequestURL();
+                }
+            });
+
+            builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                }
+            });
+            builder.show();
+        }catch (Exception e)
+        {
+
+        }
+    }
     private static int groupPostions = -1;
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        v.requestFocus();
+
         if(childPosition==0) {
             groupPostions = groupPosition;
             showDialog(AppConstants.DIALOG_RCCD_UPDATE_SERVER_URL);
@@ -176,7 +330,8 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             // TODO Auto-generated method stub
             if(NetworkUtil.getInstance(this).isNetworkAvailable(true)) {
                 KeyTalkCommunicationManager.addToLogFile("ServiceListingActivity","Tapped on service list");
-                showDialog("Authenticating...");
+               //showAlert();
+                 showDialog(getString(R.string.authenticating));
                 RCCDFileData selectedRCCDFileData =  (RCCDFileData)providerServiceList.get(groupPosition);
                 keyTalkCommunicationManager = new KeyTalkCommunicationManager(this);
                 keyTalkCommunicationManager.initiateAuthenticationProcess(KeyTalkApplication.getCommunicationLooper(),selectedRCCDFileData, groupPosition, childPosition-1);
@@ -185,6 +340,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                 showDialog(AppConstants.DIALOG_NETWORK_ERROR);
             }
         }
+        v.clearFocus();
         return false;
     }
 
@@ -302,7 +458,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                 dialogView = layoutInflater.inflate(R.layout.scrollable_custom_dialog, null);
                 dialogTxtMessage = (TextView) dialogView.findViewById(R.id.dialog_text);
                 dialogIcon.setImageResource(R.drawable.icon_info_transparent);
-                String msgTexts = "Server message \n\n";
+                String msgTexts = getString(R.string.server_message)+ " \n\n";
                 try {
                     final String serviceMessages[] = KeyTalkCommunicationManager.getServerMessage();
                     if (serviceMessages != null	&& serviceMessages.length > 0) {
@@ -315,10 +471,10 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
                             }
                         }
                     } else {
-                        msgTexts = msgTexts + "Sorry! Server message is no longer available."+"\n\n";
+                        msgTexts = msgTexts + getString(R.string.server_message_not_available)+"\n\n";
                     }
                 } catch(Exception e) {
-                    msgTexts = "Server message \n\n" + "Sorry! Server message is no longer available."+"\n\n";
+                    msgTexts = getString(R.string.server_message) + " \n\n" + getString(R.string.server_message_not_available)+"\n\n";
                 }
                 dialogTxtMessage.setText(msgTexts);
                 dialogTxtMessage.setTextSize(18);
@@ -824,7 +980,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             if(data != null && data.hasExtra(AppConstants.IS_NEW_SERVER_URL_ADDED)) {
                 if(data.getBooleanExtra(AppConstants.IS_NEW_SERVER_URL_ADDED, false)) {
                     providerServiceList = KeyTalkCommunicationManager.getAllRCCDFileContents(ServiceListingActivity.this);
-                    providerServiceAdaptor = new ProviderServicesAdaptor(this,providerServiceList);
+                    providerServiceAdaptor = new ProviderServicesAdaptor(this,providerServiceList, mProgressBar);
                     expListView.setAdapter(providerServiceAdaptor);
                     expListView.setOnChildClickListener(this);
                     for (int i = 0; i < providerServiceList.size(); i++) {
@@ -912,34 +1068,37 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         boolean isSucess = false;
         try {
             isSucess = KeyTalkCommunicationManager.isLogFileAvailable(this);
-        } catch (Exception e) {
+
+            Intent email = new Intent(Intent.ACTION_SEND);
+         //   email.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.emailscreen_email_address)});
+            email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.emailscreen_subject));
+            //email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message));
+            if (isSucess) {
+                email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
+            } else {
+                try {
+                    email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message) + KeyTalkCommunicationManager.getLogContents(this));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
+                }
+            }
+            email.setType("message/rfc822");
+            KeyTalkCommunicationManager.addToLogFile("ServiceList", "Log file available? : " + isSucess);
+            if (isSucess) {
+                try {
+                    Uri uri = KeyTalkCommunicationManager.getLogDetailsAsUri(this);
+                    email.putExtra(Intent.EXTRA_STREAM, uri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            startActivity(Intent.createChooser(email, "Choose an Email client :"));
+        }catch (Exception e) {
             e.printStackTrace();
         }
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.emailscreen_email_address)});
-        email.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.emailscreen_subject));
-        //email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message));
-        if(isSucess) {
-            email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
-        } else {
-            try {
-                email.putExtra(Intent.EXTRA_TEXT,getString(R.string.emailscreen_message) + KeyTalkCommunicationManager.getLogContents(this));
-            } catch (Exception e) {
-                e.printStackTrace();
-                email.putExtra(Intent.EXTRA_TEXT, getString(R.string.emailscreen_message));
-            }
-        }
-        email.setType("message/rfc822");
-        KeyTalkCommunicationManager.addToLogFile("ServiceList", "Log file available? : "+isSucess);
-        if(isSucess) {
-            try {
-                Uri uri = KeyTalkCommunicationManager.getLogDetailsAsUri(this);
-                email.putExtra(Intent.EXTRA_STREAM,uri);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        startActivity(Intent.createChooser(email, "Choose an Email client :"));
     }
 
     @Override
@@ -958,6 +1117,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         int id = item.getItemId();
         if (id == R.id.action_services) {
             Intent intent = new Intent(ServiceListingActivity.this, RCCDImportScreenActivity.class);
+            intent.putExtra("REFRESH",true);
             startActivity(intent);
             finish();
             return true;
@@ -989,7 +1149,7 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
         // This is reached if the provider cannot be updated for some reason.
         // App should consider all HTTP communication to be vulnerable, and take
         // appropriate action.
-        Toast.makeText(this, "Unable to update your security settings and SSL security may not avialble", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.update_and_ssl_unavailable), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -1020,5 +1180,11 @@ public class ServiceListingActivity extends AppCompatActivity implements Expanda
             onProviderInstallerNotAvailable();
         }
     }
+
+    @Override
+    public void rccdDownloadCallBack(String providerName, int serviceCount, int downloadStatus) {
+
+    }
+
 }
 

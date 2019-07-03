@@ -1,8 +1,15 @@
+/*
+ * Class  :  PinNumberScreenActivity
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.activities;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.keytalk.nextgen5.R;
 import com.keytalk.nextgen5.core.AuthenticationCertificateCallBack;
@@ -73,6 +79,11 @@ public class PinNumberScreenActivity extends AppCompatActivity  implements OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_number_screen);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.authenticationpin_header);
+        TextView header = (TextView)findViewById(R.id.header_string);
+        header.setText(R.string.authenticationpin_header);
         pinEditText = (EditText) findViewById(R.id.authenticationpin_edittext);
         pinEditText.setOnEditorActionListener(editorActionListener);
 
@@ -251,11 +262,12 @@ public class PinNumberScreenActivity extends AppCompatActivity  implements OnCli
             startActivityForResult(intent,AppConstants.REQUEST_CODE_CERT_REQUEST_CREDENTIAL_ACTIVITY);
         } else {
             //Only UserName password , pinNumber Required
-            showDialog("Validating...");
+            showDialog(getString(R.string.validating));
             KeyTalkCommunicationManager.addToLogFile("PinNumberScreenActivity","sending credentials to server");
             boolean isSucess = KeyTalkCommunicationManager.sendUserCredentialsForCertificate(userName,passWord, pinNumber, this);
             if(!isSucess) {
-                displayError("We are not able to process your request. Please try again.");
+                String request_try_again = getString(R.string.request_try_again);
+                displayError(request_try_again);
             }
         }
     }
@@ -409,10 +421,11 @@ public class PinNumberScreenActivity extends AppCompatActivity  implements OnCli
             dismissDialog();
             isShowingDialog=false;
             dialog=null;
-            //showDialog("Validating...");
+            //showDialog(R.string.validating);
             boolean isSucess = KeyTalkCommunicationManager.restartAfterDelay(tryAgain);
             if(!isSucess) {
-                displayError("We are not able to process your request. Please try again.");
+                String request_try_again = getString(R.string.request_try_again);
+                displayError(request_try_again);
             }
         }
     }
@@ -446,7 +459,7 @@ public class PinNumberScreenActivity extends AppCompatActivity  implements OnCli
             dialogTxtMessage.setText(getString(R.string.password_expire_option));
         else {
             //dialogTxtMessage.setText(getString(R.string.password_expire_option_more,days));
-            String msg = "Your password will expire within "+days+" days. Do you want to reset the password";
+            String msg = String.valueOf(R.string.password_expire_string + days + R.string.days_reset_password);
             dialogTxtMessage.setText(msg);
         }
         dialogTxtMessage.setTextSize(18);
@@ -457,20 +470,22 @@ public class PinNumberScreenActivity extends AppCompatActivity  implements OnCli
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,	int whichButton) {
                                 dialog.cancel();
-                                showDialog("Resetting...");
+                                showDialog(getString(R.string.resetting));
                                 boolean isSucess = KeyTalkCommunicationManager.resetPasswordNow();
                                 if(!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         }).setNegativeButton(R.string.cancel_text,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,	int whichButton) {
                                 dialog.cancel();
-                                showDialog("Validating...");
+                                showDialog(getString(R.string.validating));
                                 boolean isSucess = KeyTalkCommunicationManager.resetPasswordLater();
                                 if(!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         }).show();

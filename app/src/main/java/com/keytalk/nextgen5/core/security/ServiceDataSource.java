@@ -1,11 +1,17 @@
+/*
+ * Class  :  ServiceDataSource
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.core.security;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.keytalk.nextgen5.core.Processor;
-
-import org.apache.http.conn.ConnectTimeoutException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -88,6 +94,47 @@ public class ServiceDataSource  implements Processor {
         return responseStream;
     }
 
+    private InputStream processRCCDFileImportCARequestWithHTTPS(String baseUrl, Context context) throws ServiceException {
+        HttpsURLConnection httpsURLConnection = null;
+        InputStream responseStream = null;
+        try {
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            URL url = new URL(baseUrl);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestMethod(GET_REQUEST);
+            httpsURLConnection.setConnectTimeout(TIMEOUT_CONNECTION);
+            httpsURLConnection.setReadTimeout(TIMEOUT_SOCKET);
+            httpsURLConnection.setHostnameVerifier(hostnameVerifier);
+            int responseCode = httpsURLConnection.getResponseCode();
+            RCCDFileUtil.e("ServiceDataSource","RCCD httpsrequest response code : "+responseCode);
+            if (responseCode == 200) {
+                responseStream = httpsURLConnection.getInputStream();
+            } else {
+                throw new ServiceException(503);
+            }
+        } catch (UnknownHostException e) {
+            RCCDFileUtil.e("SERVICE DATA SOURCE----UnknownHostException : "+e);
+            throw new ServiceException(e); //503 Service Unavailable
+        } catch (ConnectException e) {
+            RCCDFileUtil.e("SERVICE DATA SOURCE----ConnectException :"+e);
+            throw new ServiceException(e);
+        } catch (SocketException e) {
+            RCCDFileUtil.e("SERVICE DATA SOURCE--SocketException :"+e);
+            throw new ServiceException(e);
+        } catch (SocketTimeoutException e) {
+            RCCDFileUtil.e("SERVICE DATA SOURCE----SocketTimeoutException :"+ e);
+            throw new ServiceException(e);
+        } catch (Exception e) {
+            RCCDFileUtil.e("SERVICE DATA SOURCE :"+e);
+            throw new ServiceException(e);
+        }
+        return responseStream;
+    }
     private InputStream processRCCDFileImportRequestWithHTTP(String baseUrl, Context context) throws ServiceException {
         HttpURLConnection httpURLConnection = null;
         InputStream responseStream = null;

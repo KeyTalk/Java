@@ -1,3 +1,11 @@
+/*
+ * Class  :  UserNameInputScreen
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.activities;
 
 import android.app.AlertDialog;
@@ -30,8 +38,6 @@ import com.keytalk.nextgen5.view.component.UserNameListAdaptor;
 import com.keytalk.nextgen5.view.util.AppConstants;
 
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 /*
  * Class  :  UserNameInputScreen
@@ -73,6 +79,11 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_name_input_screen);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.usernamescreen_header);
+        TextView header = (TextView)findViewById(R.id.header_string);
+        header.setText(R.string.usernamescreen_header);
         userNameEditText = (EditText) findViewById(R.id.usernamescreen_edittext);
         userNameEditText.setOnEditorActionListener(editorActionListener);
         Intent intent = getIntent();
@@ -100,7 +111,6 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
                     TextView userNameScreenText=(TextView)findViewById(R.id.usernamescreen_text);
                     userNameScreenText.setVisibility(View.GONE);
                 }
-
             }
             if(intent.hasExtra(AppConstants.IS_AUTH_REQUIRED_USER_NAME)) {
                 isUserNameRequested = intent.getBooleanExtra(AppConstants.IS_AUTH_REQUIRED_USER_NAME, true);
@@ -245,11 +255,12 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
         } else {
             KeyTalkCommunicationManager.addToLogFile("UserNameInputScreen","sending user name to server");
             //Only UserName Required
-            showDialog("Validating...");
+            showDialog(getString(R.string.validating));
             //boolean isSucess = KeyTalkCommunicationManager.getCertificateWithUserName(usernameSelected.trim(), this);
             boolean isSucess = KeyTalkCommunicationManager.sendUserCredentialsForCertificate(usernameSelected.trim(), this);
             if(!isSucess) {
-                displayError("We are not able to process your request. Please try again.");
+                String request_try_again = getString(R.string.request_try_again);
+                displayError(request_try_again);
             }
         }
     }
@@ -435,10 +446,11 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
     @Override
     public void timerCallBack() {
         // TODO Auto-generated method stub
-        showDialog("Validating...");
+        showDialog(getString(R.string.validating));
         boolean isSucess = KeyTalkCommunicationManager.restartAfterDelay(tryAgain);
         if(!isSucess) {
-            displayError("We are not able to process your request. Please try again.");
+            String request_try_again = getString(R.string.request_try_again);
+            displayError(request_try_again);
         }
 
     }
@@ -470,7 +482,7 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
             dialogTxtMessage.setText(getString(R.string.password_expire_option));
         else {
             //dialogTxtMessage.setText(getString(R.string.password_expire_option_more,days));
-            String msg = "Your password will expire within "+days+" days. Do you want to reset the password";
+            String msg = String.valueOf(R.string.password_expire_string + days + R.string.days_reset_password);
             dialogTxtMessage.setText(msg);
         }
         dialogTxtMessage.setTextSize(18);
@@ -481,20 +493,22 @@ public class UserNameInputScreen extends AppCompatActivity implements View.OnCli
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,	int whichButton) {
                                 dialog.cancel();
-                                showDialog("Resetting...");
+                                showDialog(getString(R.string.resetting));
                                 boolean isSucess = KeyTalkCommunicationManager.resetPasswordNow();
                                 if(!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         }).setNegativeButton(R.string.cancel_text,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,	int whichButton) {
                                 dialog.cancel();
-                                showDialog("Validating...");
+                                showDialog(getString(R.string.validating));
                                 boolean isSucess = KeyTalkCommunicationManager.resetPasswordLater();
                                 if(!isSucess) {
-                                    displayError("We are not able to process your request. Please try again.");
+                                    String request_try_again = getString(R.string.request_try_again);
+                                    displayError(request_try_again);
                                 }
                             }
                         }).show();

@@ -1,3 +1,11 @@
+/*
+ * Class  :  AlertDialogFragment
+ * Description :
+ *
+ * Created By Jobin Mathew on 2018
+ * All rights reserved @ keytalk.com
+ */
+
 package com.keytalk.nextgen5.view.component;
 
 import android.app.Dialog;
@@ -5,15 +13,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.keytalk.nextgen5.R;
-import com.keytalk.nextgen5.core.security.KeyTalkCommunicationManager;
-
-import static android.R.attr.id;
 
 /*
  * Class  :  AlertDialogFragment

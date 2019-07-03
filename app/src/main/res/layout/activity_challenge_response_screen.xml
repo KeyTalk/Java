@@ -12,7 +12,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>
+
     <LinearLayout
+        android:layout_marginTop="@dimen/size_50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"

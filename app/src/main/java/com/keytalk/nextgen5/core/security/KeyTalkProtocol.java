@@ -1,32 +1,36 @@
 package com.keytalk.nextgen5.core.security;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.security.KeyChain;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
-import java.util.concurrent.TimeUnit;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
-import static android.view.View.X;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 /*
  * Class  :  KeyTalkProtocol
@@ -60,7 +64,7 @@ public class KeyTalkProtocol {
     protected void phase1HandshakeHello() throws Exception {
         RCCDFileUtil.e("KeyTalk","phase1HandshakeHello");
         boolean isSSLCertAvailable = endPoint.createSSLContext(mContext, mPayload.selectedRCCDFileRequestData.getRccdFolderPath());
-        String helloResponse = endPoint.phase1HandshakeHello(mPayload.getPhase1HandshakeHelloPayload());
+        String helloResponse = endPoint.phase1HandshakeHello(mPayload.getPhase1HandshakeHelloPayload(),mContext);
         RCCDFileUtil.e("KeyTalk","phase1HandshakeHello response : "+helloResponse);
         handlePhase1HandshakeHello(helloResponse);
     }
@@ -81,7 +85,7 @@ public class KeyTalkProtocol {
     }
 
     protected AuthResult phase2SupplyAuthentication(KeyTalkCredentials creds) throws Exception {
-        RCCDFileUtil.e("KeyTalk","phase2SupplyAuthentication sending credentials to server : ");
+        RCCDFileUtil.e("KeyTalk","phase2SupplyAuthentication sending credentials to server : "+RCCDFileUtil.getTime()+"for"+mServiceName);
         String authRespResponse = endPoint.phase1Handshake(mPayload.getPhase2SupplyAuthenticationPayload(creds,mServiceName));
         RCCDFileUtil.e("KeyTalk","phase2SupplyAuthentication response header : "+authRespResponse);
         return handlePhase2SupplyAuthenticationResult(authRespResponse);
@@ -119,10 +123,12 @@ public class KeyTalkProtocol {
         try {
             JSONObject serverMessageJSONObject = new JSONObject(formatResponse[1]);
             if (isTypeMatch(serverMessageJSONObject.getString(ProtocolConstants.status), ProtocolConstants.cert)) {
+                //makeTrusted(formatResponse[1]);
                 RCCDFileUtil.e("KeyTalk", "Client cert response from server :"+ProtocolConstants.cert);
                 String certificateString = serverMessageJSONObject.getString(ProtocolConstants.cert);
                 byte[] certificateByteArray = Base64.decode(certificateString.getBytes("UTF-8"), Base64.NO_WRAP);
                 Tuple<byte[], String> cert = new Tuple<byte[], String>(certificateByteArray, mServiceName);
+
                 mKeyStore = KeyStore.getInstance("PKCS12","BC");
                 String hexKey = formatResponse[0];
                 RCCDFileUtil.e("KeyTalk","Phase3  response header  hexKey.substring(0,30) : "+ hexKey+","+hexKey.substring("keytalkcookie=".length(),44));
@@ -130,7 +136,32 @@ public class KeyTalkProtocol {
                 Enumeration<String> alias = mKeyStore.aliases();
                 // TODO: get the key as well
                 mCertChain[0] = (X509Certificate)mKeyStore.getCertificate(alias.nextElement());
+
+                mKeyStore.setCertificateEntry(String.valueOf(alias), mCertChain[0]);
+
+                KeyManagerFactory kmf = KeyManagerFactory.getInstance("X509");
+                kmf.init(mKeyStore, null);
+
+                RCCDFileUtil.e("KeyTalk", "kmf :"+kmf);
+                KeyManager[] keyManagers = kmf.getKeyManagers();
+
+                TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+                tmf.init(mKeyStore);
+                RCCDFileUtil.e("KeyTalk", "tmf :"+tmf);
+
+                TrustManager[] trustManagers = tmf.getTrustManagers();
+                RCCDFileUtil.e("KeyTalk", "trustManagers :"+trustManagers);
+
+                SSLContext sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(keyManagers, trustManagers, null);
+
+                RCCDFileUtil.e("KeyTalk", "sslContext :"+sslContext);
+
+                HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+
                 return new CertificateInfo(mCertChain, mKeyStore, hexKey.substring("keytalkcookie=".length(),44));
+
             } else if (isTypeMatch(serverMessageJSONObject.getString(ProtocolConstants.status), ProtocolConstants.eoc) ||isTypeMatch(serverMessageJSONObject.getString(ProtocolConstants.status), ProtocolConstants.error)) {
                 RCCDFileUtil.e("KeyTalk", "Communication terminated by server while certicifate request :"+serverMessageJSONObject.getString(ProtocolConstants.status));
                 throw new KeyTalkProtocolException("Communication terminated by server");
@@ -142,6 +173,43 @@ public class KeyTalkProtocol {
             e.printStackTrace();
             RCCDFileUtil.e("KeyTalk", "Communication terminated by server due to exception while certificate validation :"+e.toString());
             throw new KeyTalkProtocolException("Unable to retrieve data from server");
+        }
+    }
+
+    private void makeTrusted(String serverMessageJSONObject) {
+        try {
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            InputStream certIs = new ByteArrayInputStream(serverMessageJSONObject.getBytes());
+
+            // now I get the X509 certificate from the PEM string
+            X509Certificate certificate = (X509Certificate) cf.generateCertificate(certIs);
+
+            String alias = "alias";//cert.getSubjectX500Principal().getName();
+
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            trustStore.load(null);
+            trustStore.setCertificateEntry(alias, certificate);
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("X509");
+            kmf.init(trustStore, null);
+            KeyManager[] keyManagers = kmf.getKeyManagers();
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+            tmf.init(trustStore);
+            TrustManager[] trustManagers = tmf.getTrustManagers();
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagers, trustManagers, null);
+                  /*  URL url = new URL(urlString);
+                    conn = (HttpsURLConnection) url.openConnection();*/
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            Intent installIntent = KeyChain.createInstallIntent();
+            installIntent.putExtra(KeyChain.EXTRA_CERTIFICATE, certificate.getEncoded());
+            installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(installIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
     }
 

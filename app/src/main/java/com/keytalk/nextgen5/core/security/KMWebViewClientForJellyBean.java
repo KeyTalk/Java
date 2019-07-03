@@ -75,14 +75,14 @@ public class KMWebViewClientForJellyBean extends WebViewClientClassicExt {
         //handler.proceed();
         super.onReceivedSslError(view, handler, error);
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-	    builder.setMessage("This certificate may access your data and do you want to continue?");
-	    builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+	    builder.setMessage(R.string.certificate_access_data);
+	    builder.setPositiveButton(R.string.Continue, new DialogInterface.OnClickListener() {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	            handler.proceed();
 	        }
 	    });
-	    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	    builder.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	            handler.cancel();

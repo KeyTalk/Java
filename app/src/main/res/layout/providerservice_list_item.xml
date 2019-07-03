@@ -12,10 +12,12 @@
     android:layout_height="wrap_content"
     android:gravity="center|center_vertical"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    >
 
     <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="@dimen/size_15dp"
         android:id="@+id/keytalk_border_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,13 +34,31 @@
 
         <TextView
             android:id="@+id/keytalk_listitem"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
+            android:layout_marginRight="50dp"
+
             android:textColor="@color/dark_balck"
             android:textSize="14sp"
             android:textStyle="bold" />
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/trustCertificate"
+            android:layout_marginLeft="-60dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/trust"
+
+
+            android:layout_gravity="right"
+
+            android:background="@drawable/trust_button_background"
+            android:textSize="10sp"
+            android:textColor="@color/listgroup_headercolor"
+            android:textStyle="bold"
+     />
     </LinearLayout>
 
 </LinearLayout>

@@ -12,5 +12,5 @@ public class KeyTalkProtocolException extends Exception {
     private static final long serialVersionUID = 1L;
 
     protected KeyTalkProtocolException() {}
-    protected KeyTalkProtocolException(String msg) { super(msg); }
+    public KeyTalkProtocolException(String msg) { super(msg); }
 }

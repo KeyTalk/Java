@@ -51,7 +51,7 @@ public class IniResponseData
      * @param key
      * @return String
      */
-    private Object get(String key) {
+    protected Object get(String key) {
 
         try {
             return ini.get(key);

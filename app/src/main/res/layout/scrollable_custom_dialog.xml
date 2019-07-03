@@ -8,11 +8,16 @@
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
+    <!--<include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/dialog_image"
@@ -23,17 +28,18 @@
             android:contentDescription="@string/null_value"
             android:src="@drawable/icon_info_transparent" />
 
-        <TextView
-            android:id="@+id/dialog_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/dialog_image"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:text="@string/no_values_entered"
-            android:textSize="@dimen/size_18" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/dialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_image"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:text="@string/no_values_entered"
+        android:textSize="@dimen/size_18" />
 
 </ScrollView>

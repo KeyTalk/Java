@@ -51,7 +51,7 @@ public class PayloadBuilder {
 
     protected String getPhase2SupplyAuthenticationPayload(KeyTalkCredentials creds, String serviceName) throws Exception {
         String requstURL = SLASH + ProtocolConstants.authentication + ProtocolConstants.service + serviceName +
-                ProtocolConstants.caller_hwdescription + URLEncoder.encode(ProtocolConstants.platform_name, "UTF-8");
+                ProtocolConstants.caller_hwdescription + URLEncoder.encode("Keytalk Android"+" "+ android.os.Build.MODEL, "UTF-8");
         Log.e("TAG", "requstURL : requstURL1 :" + requstURL);
         if (creds.isUsernameRequested())
             requstURL = requstURL + ProtocolConstants.userid + /*URLEncoder.encode(*/creds.getUsername()/*, "UTF-8")*/;//creds.getUsername();

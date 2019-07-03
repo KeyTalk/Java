@@ -12,12 +12,12 @@ public class Tuple<T, U> {
     private final T mFirst;
     private final U mSecond;
 
-    protected Tuple(T first, U second){
+    public Tuple(T first, U second){
         mFirst = first;
         mSecond = second;
     }
 
-    protected T getFirst(){
+    public T getFirst(){
         return mFirst;
     }
 

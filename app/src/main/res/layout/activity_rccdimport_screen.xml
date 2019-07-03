@@ -11,7 +11,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.keytalk.nextgen5.view.activities.RCCDImportScreenActivity">
+    tools:context="com.keytalk.nextgen5.view.activities.RCCDImportScreenActivity"
+    android:id="@+id/main_relative_layout">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>
 
     <ProgressBar
         android:id="@+id/spinner_progressbar"
@@ -26,6 +32,7 @@
         android:elevation="7dp" />
 
     <ScrollView
+        android:layout_marginTop="@dimen/size_50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true">
@@ -47,6 +54,7 @@
                 android:id="@+id/rccd_import_ok_button"
                 style="@style/screen_button"
                 android:text="@string/import_rccd" />
+
 
             <TextView
                 style="@style/screen_text"
@@ -78,15 +86,44 @@
                 android:id="@+id/rccd_import_reset_session_button"
                 style="@style/screen_button"
                 android:text="@string/reset_session_text" />
+          <!--  <TextView
+                style="@style/screen_text"
+                android:text="This will install CA certificates used to trust the certificate" />
 
-            <TextView
+            <Button
+
+                style="@style/screen_button"
+                android:text="Trust CERT CHAIN" />-->
+            <Button
+                android:id="@+id/about_button"
+                style="@style/screen_button"
+                android:text="@string/about" />
+            <!--<TextView
                 style="@style/screen_text"
                 android:text="@string/reset_session_message_text" />
 
             <Button
                 android:id="@+id/rccd_import_client_identifier_button"
                 style="@style/screen_button"
-                android:text="@string/view_client_identifier_text" />
+                android:text="@string/view_client_identifier_text" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Language_header"
+                android:textStyle="bold"
+                android:textSize="@dimen/size_18"
+                android:layout_gravity="start"
+                android:textAlignment="textStart"/>
+
+            <Spinner
+                android:id="@+id/language_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15dp"
+                style="@style/screen_button"
+                android:entries="@array/language_arrays" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

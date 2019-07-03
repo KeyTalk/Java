@@ -37,6 +37,7 @@ public class BaseCommand<R extends Data, S extends Data> implements Communicatio
         Message msg = Message.obtain((Handler) handler, 1, response);
         if (handleUsingsThread) {
             handler.sendMessage(msg);
+           // RCCDAuthenticationCommand.storeRequest();
         } else {
             ((LocalHandler) handler).handleLocalMessage(response);
 
@@ -109,7 +110,7 @@ public class BaseCommand<R extends Data, S extends Data> implements Communicatio
                 responseHeader.setSuccess(true);
                 rccdDFileImportResponseData.setResponseHeader(responseHeader);
                 response.setData((S) rccdDFileImportResponseData);
-                RCCDFileUtil.e("BaseCommand","RCCD request success ");
+                RCCDFileUtil.e("BaseCommand","RCCD request successful");
                 return true;
             } else {
                 RCCDFileUtil.e("BaseCommand","RCCD request failed ");

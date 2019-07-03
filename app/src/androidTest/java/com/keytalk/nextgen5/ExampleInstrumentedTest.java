@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.keytalk.nextgen5", appContext.getPackageName());
+        assertEquals("com.keytalk.nextgen6", appContext.getPackageName());
     }
 }

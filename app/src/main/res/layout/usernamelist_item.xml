@@ -12,10 +12,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" 
     android:gravity="center|center_vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     >
-    
+    <!--<include
+        layout="@layout/app_bar"
+        android:id="@+id/app_bar">
+    </include>-->
+
     <TextView
         android:id="@+id/username_listitem"
         android:layout_width="wrap_content"

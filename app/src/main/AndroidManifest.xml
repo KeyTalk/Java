@@ -10,26 +10,27 @@
     package="com.keytalk.nextgen5">
 
     <!-- PERMISSIONS -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-
     <application
         android:name=".application.KeyTalkApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:configChanges="locale"
+        android:icon="@drawable/keytalk_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/keytalk_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".view.activities.SplashScreenActivity"
             android:theme="@style/SplashTheme">
@@ -41,12 +42,18 @@
         </activity>
         <activity
             android:name=".view.activities.RCCDImportScreenActivity"
-            android:label="@string/import_rccd" />
+            android:label="" />
         <activity
             android:name=".view.activities.RCCDFileEmailImportScreenActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/EMailDiaogTheme">
-            <intent-filter>
+            <intent-filter >
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/rccd" />
+            </intent-filter>
+     <!--       <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -62,48 +69,74 @@
 
                 <data android:scheme="file" />
                 <data android:pathPattern=".*\\.rccd" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".view.activities.ServiceListingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/services" />
+            android:label="" />
         <activity
             android:name=".view.activities.WebViewActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_webview" />
+            android:label="" />
         <activity
             android:name=".view.activities.ChangeServerURLActivity"
-            android:label="@string/urlscreen_default_text"
+            android:label=""
             android:parentActivityName=".view.activities.ServiceListingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.keytalk.nextgen5.view.activities.ServiceListingActivity" />
+                android:value=".view.activities.ServiceListingActivity" />
         </activity>
         <activity
             android:name=".view.activities.UserNameInputScreen"
             android:configChanges="orientation|screenSize"
-            android:label="@string/usernamescreen_header" />
-        <activity android:name=".view.activities.PasswordScreenActivity"
+            android:label="" />
+        <activity
+            android:name=".view.activities.PasswordScreenActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/passwordscreen_header"/>
-        <activity android:name=".view.activities.PinNumberScreenActivity"
+            android:label="" />
+        <activity
+            android:name=".view.activities.PinNumberScreenActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/authenticationpin_header"/>
-        <activity android:name=".view.activities.ChallengeResponseScreenActivity"
+            android:label="" />
+        <activity
+            android:name=".view.activities.ChallengeResponseScreenActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/responsescreen_header"/>
+            android:label="" />
         <activity
             android:name=".view.activities.NewChallengeResponseScreenActivity"
-            android:label="@string/responsescreen_header"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name=".view.activities.ChangePasswordActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/change_password"/>
-        <activity android:name=".view.activities.ChallengeRequestActivity"
+            android:label="" />
+        <activity
+            android:name=".view.activities.ChangePasswordActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/passwordscreen_header" />
-
+            android:label="" />
+        <activity
+            android:name=".view.activities.ChallengeRequestActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="" />
+        <activity android:name=".view.activities.BaseActivity"></activity>
+        <!--<service android:name=".util.CertificateValidationJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true"/>-->
+        <!--<provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.homefolder.example.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            &lt;!&ndash; ressource file to create &ndash;&gt;
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>-->
+        <service android:name=".core.security.SyncService">
+        <intent-filter>
+            <action android:name="android.accounts.AccountAuthenticator" />
+        </intent-filter>
+        <meta-data android:name="android.accounts.AccountAuthenticator"
+            android:resource="@xml/authenticator" />
+    </service>
     </application>
 
 </manifest>

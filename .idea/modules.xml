@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KeyTalkNextGen5.iml" filepath="$PROJECT_DIR$/KeyTalkNextGen5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java.iml" filepath="$PROJECT_DIR$/Java.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Keytalk\git\Java\app\app.iml" filepath="E:\Keytalk\git\Java\app\app.iml" />
+      <module fileurl="file://E:\Keytalk\git\Java\v3.iml" filepath="E:\Keytalk\git\Java\v3.iml" />
     </modules>
   </component>
 </project>

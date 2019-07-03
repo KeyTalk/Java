@@ -2,20 +2,17 @@ package com.keytalk.nextgen5.core.security;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.spongycastle.asn1.ASN1InputStream;
-import org.spongycastle.asn1.DERIA5String;
-import org.spongycastle.asn1.DERObject;
-import org.spongycastle.asn1.DEROctetString;
+import com.keytalk.nextgen5.R;
+import com.keytalk.nextgen5.view.util.AppConstants;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.cert.X509Certificate;
@@ -36,6 +33,8 @@ public class KeyTalkSettings {
 
     private static String userDefinedKeyStorePassword = "12345";
 
+    public KeyTalkSettings()
+    {}
     protected KeyTalkSettings(Context c) {
         mContext = c;
         mSettings = mContext.getSharedPreferences(ProtocolConstants.KMSettingsPrefFileName, 0);
@@ -46,17 +45,23 @@ public class KeyTalkSettings {
     }
 
 
-    protected boolean validCertAvailable(String url, String serviceName) {
+    public boolean validCertAvailable(String url, String serviceName) {
         boolean result = false;
         try {
             KeyStore ks = readKeyStore(url,serviceName).getKeyStore();
             X509Certificate cert = getCertificateForServiceName(ks,serviceName);
-            Date practicalEndTime = calcPracticalEndTime(cert.getNotBefore(),cert.getNotAfter(), getPracticalEndTimePercentage());
+            Date practicalEndTime = calcPracticalEndTime(cert.getNotBefore(),cert.getNotAfter(), getPracticalEndTimePercentage(serviceName,cert.getNotBefore(),cert.getNotAfter()));
             Date currentTime = new Date();
             result = currentTime.before(practicalEndTime);
         } catch (FileNotFoundException e) {
+            Log.e("",e.getMessage());
             // do nothing, result is already false
         } catch (KeyTalkNoCertificateException e) {
+            Log.e("",e.getMessage());
+            // do nothing, result is already false
+        }
+        catch (Exception e) {
+            Log.e("",e.getMessage());
             // do nothing, result is already false
         }
         return result;
@@ -79,7 +84,7 @@ public class KeyTalkSettings {
         } catch (KeyStoreException e) {
             throw new RuntimeException(e);
         }
-        throw new KeyTalkNoCertificateException("No certificate found for service: "  + serviceName);
+        throw new KeyTalkNoCertificateException(mContext.getString(R.string.no_cert_found_service)  + serviceName);
     }
 
     /**
@@ -215,8 +220,21 @@ public class KeyTalkSettings {
         }
     }
 
-    private int getPracticalEndTimePercentage() {
-        return 75;
+    private int getPracticalEndTimePercentage(String serviceName, Date notBefore, Date notAfter) {
+       // IniResponseData parsedIni = new IniResponseData();
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String certValidity = pref.getString(AppConstants.CERT_VALIDITY+serviceName,"");
+        String certValidPercent = pref.getString(AppConstants.CERT_VALID_PERCENT+serviceName,"");
+        int value=75;
+        if(certValidPercent!=null&&certValidPercent!="")
+            value=Integer.parseInt(certValidPercent);
+        else if(certValidity!=null&&certValidity!="")
+        {
+            long validityWindow = notAfter.getTime() - notBefore.getTime();
+            long before=Integer.parseInt(certValidity.substring(0,certValidity.length()-1))*100000;
+            value=Integer.parseInt(String.valueOf(before/validityWindow));
+        }
+        return 100-value;
     }
 
     /**
